@@ -1,11 +1,17 @@
+/**DRAFTS**/
 one sig Company{
 	cars: set Car,
 	map: set SafeArea
 }
 
-abstract sig Area{
+sig Position{
 	latitude: Int, 	//should be float
 	longitude: Int	//should be float
+}
+
+/**AREA**/
+abstract sig Area{
+	position: Position
 }
 
 sig SafeArea extends Area{
@@ -14,6 +20,7 @@ sig SafeArea extends Area{
 
 sig UnsafeArea extends Area{}
 
+/**POWERGRID**/
 sig PowerGrid{
 	chargingCars: set Car,
 	capacity: Int
@@ -21,6 +28,7 @@ sig PowerGrid{
 	#chargingCars < capacity
 }
 
+/**CAR**/
 sig Car{
 	licensePlate: Int,
 	charge: Int
@@ -32,6 +40,7 @@ fact uniqueLicensePlate{
 	no disjoint c1, c2: Car | c1.licensePlate = c2.licensePlate
 }
 
+/**EXECUTION**/
 pred show(){}
 
 run show for 3
