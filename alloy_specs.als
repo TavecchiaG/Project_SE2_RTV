@@ -22,6 +22,7 @@ sig UnsafeArea extends Area{}
 
 /**POWERGRID**/
 sig PowerGrid{
+	code: Int,
 	chargingCars: set Car,
 	capacity: Int
 }{
