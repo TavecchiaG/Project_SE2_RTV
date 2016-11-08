@@ -14,8 +14,16 @@ abstract sig Area{
 	position: Position
 }
 
+fact sameAreaSamePosition{
+	all a1, a2: Area | (a1.position = a2.position) implies (a1 = a2)
+}
+
 sig SafeArea extends Area{
 	power: lone PowerGrid
+}
+
+fact allSafeAreasinMap{
+	no s: SafeArea | not (s in Company.map)
 }
 
 sig UnsafeArea extends Area{}
@@ -41,17 +49,37 @@ fact noRandomPowerGrid{
 
 /**CAR**/
 sig Car{
-	licensePlate: Int,
-	charge: Int
+	licensePlate: LicensePlate,
+	charge: Int,
+	position: Position,
+	passengers: Int
 }{
 	charge >= 0 and charge <=100
+	passengers >= 0 and passengers <= 4
 }
+
+sig LicensePlate{}
 
 fact uniqueLicensePlate{
 	no disjoint c1, c2: Car | c1.licensePlate = c2.licensePlate
 }
 
+fact allCarstoCompany{
+	no c: Car | not (c in Company.cars)
+}
+
+/**USER**/
+sig User{
+	drivingLicense: DrivingLicense
+}
+
+sig DrivingLicense{}
+
+fact uniqueDrivingLicense{
+	no disjoint u1, u2: User | u1.drivingLicense = u2.drivingLicense
+}
+
 /**EXECUTION**/
 pred show(){}
 
-run show for 3
+run show
