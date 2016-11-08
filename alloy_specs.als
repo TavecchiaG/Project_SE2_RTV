@@ -22,6 +22,7 @@ sig UnsafeArea extends Area{}
 
 /**POWERGRID**/
 sig PowerGrid{
+	code: Int,
 	chargingCars: set Car,
 	capacity: Int
 }{
@@ -31,11 +32,11 @@ sig PowerGrid{
 fact PowerGridinSafeArea{
 	all p1, p2: PowerGrid, s1, s2: SafeArea | 
 	((s1.power = p1) and (s1.power = p2) => (p1 = p2))
-	and ((s1.power = p1) => (s2.power != p1) or (s2 = s1))
+	and ((s1.power = p1) => (s2.power != p1) or (p2 = p1))
 }
 
-pred noRandomPowerGrid[p: PowerGrid]{
-	one s: SafeArea | s.power = p
+fact noRandomPowerGrid{
+	no p: PowerGrid | (SafeArea.power != none) => not (SafeArea.power = p)
 }
 
 /**CAR**/
@@ -53,5 +54,4 @@ fact uniqueLicensePlate{
 /**EXECUTION**/
 pred show(){}
 
-run noRandomPowerGrid
 run show for 3
