@@ -9,6 +9,10 @@ sig Position{
 	longitude: Int	//should be float
 }
 
+sig LicensePlate{}
+
+sig DrivingLicense{}
+
 /**AREA**/
 abstract sig Area{
 	position: Position
@@ -30,7 +34,6 @@ sig UnsafeArea extends Area{}
 
 /**POWERGRID**/
 sig PowerGrid{
-	//code: Int,
 	chargingCars: set Car,
 	capacity: Int
 }{
@@ -58,8 +61,6 @@ sig Car{
 	passengers > 0 and passengers <= 4
 }
 
-sig LicensePlate{}
-
 fact uniqueLicensePlate{
 	no disjoint c1, c2: Car | c1.licensePlate = c2.licensePlate
 }
@@ -71,14 +72,21 @@ fact allCarstoCompany{
 /**USER**/
 sig User{
 	drivingLicense: DrivingLicense
+	//TBC
 }
-
-sig DrivingLicense{}
 
 fact uniqueDrivingLicense{
 	no disjoint u1, u2: User | u1.drivingLicense = u2.drivingLicense
 }
 
+/**
+TBD**/
+
+/**RIDE**/
+sig Ride{}
+
+/**RENT**/
+sig rent{}
 /**EXECUTION**/
 pred show(){}
 
