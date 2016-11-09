@@ -30,7 +30,7 @@ sig UnsafeArea extends Area{}
 
 /**POWERGRID**/
 sig PowerGrid{
-	code: Int,
+	//code: Int,
 	chargingCars: set Car,
 	capacity: Int
 }{
@@ -55,7 +55,7 @@ sig Car{
 	passengers: Int
 }{
 	charge >= 0 and charge <=100
-	passengers >= 0 and passengers <= 4
+	passengers > 0 and passengers <= 4
 }
 
 sig LicensePlate{}
