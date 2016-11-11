@@ -95,13 +95,12 @@ sig Time{
             second>=0 and second<60
 }
 
-/*
-fun timeComparison (t1 : Time, t2 : Time) : Bool {
-   {answer: Bool | 
-         
+fun timeLower (t1 : Time, t2 : Time) : Bool {
+	{ answer: Bool | 
+		answer=True <=> ((t1.hour<t2.hour) and ((t1.hour=t2.hour) => (t1.minute <t2.minute))
+		and ((t1.hour=t2.hour and t1.minute=t2.minute) => (t1.second<t2.second)))
    }
 }
-*/
 
 sig Reservation{
 	reservedCar: Car,
