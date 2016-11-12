@@ -149,6 +149,10 @@ fact noChargingifOutofservice{
 	all c: Car | (c.outOfService=True) => (c.inCharge=False)
 }
 
+fact CharginginSafeArea{
+	all c: Car, s: SafeArea | (c.inCharge=True) => (c.position = s.position)
+}
+
 /**USER FACT**/
 
 fact uniquePassword{
@@ -180,7 +184,7 @@ fact noUsingCarifOutOfService{
 /**EXECUTION**/
 
 pred show{}
-run show for 3
+run show for 6
 
 
 
