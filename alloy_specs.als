@@ -134,14 +134,6 @@ fact allSafeAreasinMap{
     no s: SafeArea | not (s in Company.map)
 }
 
-/**POWERGRID FACT**/
-
-fact PowerGridinSafeArea{
-	all p1, p2: PowerGrid, s1, s2: SafeArea |
-	(((p1.safeArea = s1) and (p2.safeArea = s2)) => (p1=p2)) 
-	and ((p1.safeArea=s1)=>((p1.safeArea!=s2) or (s1=s2)))
-}
-
 /**CAR FACT**/
 
 fact uniqueLicensePlate{
@@ -190,7 +182,7 @@ fact noUsingCarifOutOfService{
 
 fact noRideforsameReservation{
     all r: Ride, res1,res2: Reservation |
-    ((res1.reservedCar = res2.reservedCar) and (res1.data = res2.data)) =>
+    ((res1.reservedCar = res2.reservedCar)) =>
     ((res1 = res2) or (res2.startingTime.progressive > r.endingTime.progressive))
 }
 /**EXECUTION**/
