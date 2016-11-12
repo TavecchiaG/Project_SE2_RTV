@@ -159,10 +159,17 @@ fact uniqueDrivingLicense{
 
 fact noOtherReservationTillReserved{}
 
+fact noReservationOnUnavailableCar{
+	no r: Reservation | r.reservedCar.outOfService =True
+}
+
+fact noChargingOnUnavailableCar{
+
+
 /**EXECUTION**/
 
-pred show(){}
-run show 
+pred show{}
+run show for 6 but exactly 5 Car
 
 
 
