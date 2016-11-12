@@ -167,10 +167,20 @@ fact noReservationOnUnavailableCar{
 	no r: Reservation | r.reservedCar.outOfService =True
 }
 
+/**RIDE FACT**/
+
+fact noUsingCarifinCharge{
+	no r: Ride | r.reservation.reservedCar.inCharge = True
+}
+
+fact noUsingCarifOutOfService{
+	no r: Ride | r.reservation.reservedCar.outOfService = True
+}
+
 /**EXECUTION**/
 
 pred show{}
-run show for 6 but exactly 5 Car
+run show for 3
 
 
 
