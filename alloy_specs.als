@@ -1,6 +1,6 @@
 open util/boolean
-/**DRAFTS**/
 
+/**DRAFTS**/
 one sig Company{
     cars: set Car,
     map: set SafeArea
@@ -24,7 +24,6 @@ sig DrivingLicense{}
 sig Password{}
 
 /**AREA**/
-
 abstract sig Area{
     position: Position
 }
@@ -34,7 +33,6 @@ sig SafeArea extends Area{}
 sig UnsafeArea extends Area{}
 
 /**POWERGRID**/
-
 sig PowerGrid{
 	safeArea: one SafeArea,
 	chargingCars: set Car,
@@ -44,7 +42,6 @@ sig PowerGrid{
 }
 
 /**CAR**/
-
 sig Car{
     licensePlate: LicensePlate,
     charge: Int,
@@ -58,7 +55,6 @@ sig Car{
 }
 
 /**USER**/
-
 sig User{
 	password : Password,
 	suspendedService: Bool,
@@ -66,7 +62,6 @@ sig User{
 }
 
 /**RESERVATION**/
-
 sig Reservation{
 	reservedCar: Car,
 	user: User,
@@ -79,7 +74,6 @@ sig Reservation{
 }
 
 /**RIDE**/
-
 sig Ride{
 	startingPosition: Position,
 	endingPosition: Position,
@@ -109,6 +103,11 @@ sig Charging{
    powerGrid: PowerGrid   
 }
 
+/**POSITION FACT**/
+fact samePosition{
+	all p1, p2: Position | (p1.latitude = p2.latitude and p1.longitude = p2.longitude) iff (p1 = p2)
+}
+
 /**AREA FACT**/
 fact sameAreaSamePosition{
     all a1, a2: Area | (a1.position = a2.position) implies (a1 = a2)
@@ -118,8 +117,12 @@ fact allSafeAreasinMap{
     no s: SafeArea | not (s in Company.map)
 }
 
-/**CAR FACT**/
+/**POWERGRID FACT**/
+fact onePGChargingOneCar{
+    all disjoint pg1, pg2: PowerGrid | (pg1.chargingCars & pg2.chargingCars)=none
+}
 
+/**CAR FACT**/
 fact uniqueLicensePlate{
     no disjoint c1, c2: Car | c1.licensePlate = c2.licensePlate
 }
@@ -132,8 +135,16 @@ fact noChargingifOutofservice{
 	all c: Car | (c.outOfService=True) => (c.inCharge=False)
 }
 
-/**USER FACT**/
+fact carInChargingiffPG{
+    all car: Car | (car.inCharge=True) iff (one pg:PowerGrid | car in pg.chargingCars and
+        pg.safeArea.position=car.position)
+}
 
+fact noChargeThanNoPG{
+	all car: Car | (car.inCharge=False) implies (no pg:PowerGrid | car in pg.chargingCars)
+}
+
+/**USER FACT**/
 fact uniquePassword{
      no disjoint u1,u2: User | u1.password=u2.password
 }
@@ -143,7 +154,6 @@ fact uniqueDrivingLicense{
 }
 
 /**RESERVATION FACT**/
-
 fact noReservationOnUnavailableCar{
 	no r: Reservation | r.reservedCar.outOfService =True
 }
@@ -157,7 +167,6 @@ fact sequentialReservation{
 }
 
 /**RIDE FACT**/
-
 fact noUsingCarifinCharge{
 	no r: Ride | r.reservation.reservedCar.inCharge = True
 }
@@ -167,7 +176,6 @@ fact noUsingCarifOutOfService{
 }
 
 /**VARIOUS FACT**/
-
 fact noRideforsameReservation{
     all r: Ride, res1,res2: Reservation |
     ((res1.reservedCar = res2.reservedCar)) =>
@@ -182,24 +190,6 @@ fact RideReservationTime{
 }
 
 /**WIP**/
-
-fact samePosition{
-	all p1, p2: Position | (p1.latitude = p2.latitude and p1.longitude = p2.longitude) iff (p1 = p2)
-}
-
-fact onePGChargingOneCar{
-    all disjoint pg1, pg2: PowerGrid | (pg1.chargingCars & pg2.chargingCars)=none
-}
-
-fact carInChargingiffPG{
-    all car: Car | (car.inCharge=True) iff (one pg:PowerGrid | car in pg.chargingCars and
-        pg.safeArea.position=car.position)
-}
-
-fact noChargeThanNoPG{
-	all car: Car | (car.inCharge=False) implies (no pg:PowerGrid | car in pg.chargingCars)
-}
-
 
 /**EXECUTION**/
 
