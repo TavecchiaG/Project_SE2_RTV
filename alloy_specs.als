@@ -11,6 +11,12 @@ sig Position{
     longitude: Int    //should be float
 }
 
+sig Time{
+    progressive: Int
+}{
+    progressive>0 and progressive <=525600
+}
+
 sig LicensePlate{}
 
 sig DrivingLicense{}
@@ -58,28 +64,6 @@ sig User{
 	suspendedService: Bool,
 	drivingLicense: DrivingLicense
 }
-
-/**TIME**/
-
-sig Time{
-	progressive: Int
-}{
-	progressive > 0
-}
-            /* minute: Int,
-             second: Int
-}{
-            hour>=0 and hour<24
-            minute>=0 and minute<60
-            second>=0 and second<60
-}
-
-fun timeLower (t1 : Time, t2 : Time) : Bool {
-	{ answer: Bool | 
-		answer=True <=> ((t1.hour<t2.hour) and ((t1.hour=t2.hour) => (t1.minute <t2.minute))
-		and ((t1.hour=t2.hour and t1.minute=t2.minute) => (t1.second<t2.second)))
-   }
-}*/
 
 /**RESERVATION**/
 
@@ -148,10 +132,6 @@ fact noChargingifOutofservice{
 	all c: Car | (c.outOfService=True) => (c.inCharge=False)
 }
 
-fact CharginginSafeArea{
-	all c: Car, s: SafeArea | (c.inCharge=True) => (c.position = s.position)
-}
-
 /**USER FACT**/
 
 fact uniquePassword{
@@ -164,10 +144,16 @@ fact uniqueDrivingLicense{
 
 /**RESERVATION FACT**/
 
-fact noOtherReservationTillReserved{}
-
 fact noReservationOnUnavailableCar{
 	no r: Reservation | r.reservedCar.outOfService =True
+}
+ 
+//only reservation that are in a sequential time
+fact sequentialReservation{
+	all res1,res2: Reservation |
+	((res1.reservedCar = res2.reservedCar) => 
+	((res1=res2) or (res1.endingTime.progressive <= res2.startingTime.progressive) 
+	or (res1.startingTime.progressive >= res2.endingTime.progressive)))
 }
 
 /**RIDE FACT**/
@@ -180,15 +166,36 @@ fact noUsingCarifOutOfService{
 	no r: Ride | r.reservation.reservedCar.outOfService = True
 }
 
+/**VARIOUS FACT**/
+
 fact noRideforsameReservation{
     all r: Ride, res1,res2: Reservation |
     ((res1.reservedCar = res2.reservedCar)) =>
     ((res1 = res2) or (res2.startingTime.progressive > r.endingTime.progressive))
 }
+
+fact RideReservationTime{
+	all ride: Ride , res: Reservation | 
+	(ride.reservation.reservedCar=res.reservedCar) 
+	implies (ride.reservation=res or (res.startingTime.progressive>ride.endingTime.progressive) 
+	or (res.endingTime.progressive<ride.startingTime.progressive)) 
+}
+
+
+fact onePGChargingOneCar{
+    all disjoint pg1, pg2: PowerGrid | (pg1.chargingCars & pg2.chargingCars)=none
+}
+
+
+fact carInChargingiffPG{
+    all car: Car | (car.inCharge=True) iff (one pg:PowerGrid | car in pg.chargingCars)
+}
+
+fact ChargingCarsSamePositionofSafeArea{
+	 all car: Car | PowerGrid.safeArea.position=car.position iff (car.inCharge=True)
+}
+
 /**EXECUTION**/
 
 pred show{}
-run show for 6 but exactly 5 Reservation
-
-
-
+run show for 6 but exactly 4 SafeArea
