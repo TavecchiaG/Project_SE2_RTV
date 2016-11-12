@@ -181,21 +181,27 @@ fact RideReservationTime{
 	or (res.endingTime.progressive<ride.startingTime.progressive)) 
 }
 
+/**WIP**/
+
+fact samePosition{
+	all p1, p2: Position | (p1.latitude = p2.latitude and p1.longitude = p2.longitude) iff (p1 = p2)
+}
 
 fact onePGChargingOneCar{
     all disjoint pg1, pg2: PowerGrid | (pg1.chargingCars & pg2.chargingCars)=none
 }
 
-
 fact carInChargingiffPG{
-    all car: Car | (car.inCharge=True) iff (one pg:PowerGrid | car in pg.chargingCars)
+    all car: Car | (car.inCharge=True) iff (one pg:PowerGrid | car in pg.chargingCars and
+        pg.safeArea.position=car.position)
 }
 
-fact ChargingCarsSamePositionofSafeArea{
-	 all car: Car | PowerGrid.safeArea.position=car.position iff (car.inCharge=True)
+fact noChargeThanNoPG{
+	all car: Car | (car.inCharge=False) implies (no pg:PowerGrid | car in pg.chargingCars)
 }
+
 
 /**EXECUTION**/
 
 pred show{}
-run show for 6 but exactly 4 SafeArea
+run show 
