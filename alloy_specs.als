@@ -87,8 +87,11 @@ sig Reservation{
 	reservedCar: Car,
 	user: User,
 	startingTime: Time,
-	duration: Time,
+	endingTime: Time,
 	data: Int // to semplify our life LOL :D
+}{
+	data > 0
+	endingTime.progressive > startingTime.progressive
 }
 
 /**RIDE**/
@@ -96,12 +99,16 @@ sig Reservation{
 sig Ride{
 	startingPosition: Position,
 	endingPosition: Position,
-	duration: Time,
+	startingTime: Time,
+	endingTime: Time,
 	passengers: Int,
 	moneySaving: Bool,
 	reservation: Reservation,
 	charging: lone Charging,
 	discount: set Discount
+}{
+	endingTime.progressive > startingTime.progressive
+	startingTime.progressive < reservation.endingTime.progressive
 }
 
 /**DISCOUNT**/
@@ -181,10 +188,15 @@ fact noUsingCarifOutOfService{
 	no r: Ride | r.reservation.reservedCar.outOfService = True
 }
 
+fact noRideforsameReservation{
+    all r: Ride, res1,res2: Reservation |
+    ((res1.reservedCar = res2.reservedCar) and (res1.data = res2.data)) =>
+    ((res1 = res2) or (res2.startingTime.progressive > r.endingTime.progressive))
+}
 /**EXECUTION**/
 
 pred show{}
-run show for 6
+run show for 6 but exactly 5 Reservation
 
 
 
