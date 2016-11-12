@@ -145,6 +145,10 @@ fact allCarstoCompany{
     no c: Car | not (c in Company.cars)
 }
 
+fact noChargingifOutofservice{
+	all c: Car | (c.outOfService=True) => (c.inCharge=False)
+}
+
 /**USER FACT**/
 
 fact uniquePassword{
@@ -162,9 +166,6 @@ fact noOtherReservationTillReserved{}
 fact noReservationOnUnavailableCar{
 	no r: Reservation | r.reservedCar.outOfService =True
 }
-
-fact noChargingOnUnavailableCar{
-
 
 /**EXECUTION**/
 
