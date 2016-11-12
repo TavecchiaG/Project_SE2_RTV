@@ -25,10 +25,6 @@ abstract sig Area{
 
 sig SafeArea extends Area{}
 
-fact allSafeAreasinMap{
-    no s: SafeArea | not (s in Company.map)
-}
-
 sig UnsafeArea extends Area{}
 
 /**POWERGRID**/
@@ -39,12 +35,6 @@ sig PowerGrid{
     capacity: Int
 }{
     #chargingCars <= capacity
-}
-
-fact PowerGridinSafeArea{
-	all p1, p2: PowerGrid, s1, s2: SafeArea |
-	(((p1.safeArea = s1) and (p2.safeArea = s2)) => (p1=p2)) 
-	and ((p1.safeArea=s1)=>((p1.safeArea!=s2) or (s1=s2)))
 }
 
 /**CAR**/
@@ -61,14 +51,6 @@ sig Car{
     passengers > 0 and passengers <= 4
 }
 
-fact uniqueLicensePlate{
-    no disjoint c1, c2: Car | c1.licensePlate = c2.licensePlate
-}
-
-fact allCarstoCompany{
-    no c: Car | not (c in Company.cars)
-}
-
 /**USER**/
 
 sig User{
@@ -77,17 +59,14 @@ sig User{
 	drivingLicense: DrivingLicense
 }
 
-fact uniquePassword{
-     no disjoint u1,u2: User | u1.password!=u2.password
-}
-
-fact uniqueDrivingLicense{
-    no disjoint u1, u2: User | u1.drivingLicense = u2.drivingLicense
-}
+/**TIME**/
 
 sig Time{
-             hour: Int,
-             minute: Int,
+	progressive: Int
+}{
+	progressive > 0
+}
+            /* minute: Int,
              second: Int
 }{
             hour>=0 and hour<24
@@ -100,7 +79,9 @@ fun timeLower (t1 : Time, t2 : Time) : Bool {
 		answer=True <=> ((t1.hour<t2.hour) and ((t1.hour=t2.hour) => (t1.minute <t2.minute))
 		and ((t1.hour=t2.hour and t1.minute=t2.minute) => (t1.second<t2.second)))
    }
-}
+}*/
+
+/**RESERVATION**/
 
 sig Reservation{
 	reservedCar: Car,
@@ -109,8 +90,6 @@ sig Reservation{
 	duration: Time,
 	data: Int // to semplify our life LOL :D
 }
-
-fact noOtherReservationTillReserved{}
 
 /**RIDE**/
 
@@ -125,6 +104,7 @@ sig Ride{
 	discount: set Discount
 }
 
+/**DISCOUNT**/
 //valori negativi = bonus
 sig Discount{
 	value : Int
@@ -132,6 +112,7 @@ sig Discount{
 	value=30 or value=-10 or value=-20 or value=-30
 }
 
+/**CHARGING**/
 sig Charging{
    plugginTime: Time,
    powerGrid: PowerGrid   
@@ -142,10 +123,46 @@ fact sameAreaSamePosition{
     all a1, a2: Area | (a1.position = a2.position) implies (a1 = a2)
 }
 
+fact allSafeAreasinMap{
+    no s: SafeArea | not (s in Company.map)
+}
+
+/**POWERGRID FACT**/
+
+fact PowerGridinSafeArea{
+	all p1, p2: PowerGrid, s1, s2: SafeArea |
+	(((p1.safeArea = s1) and (p2.safeArea = s2)) => (p1=p2)) 
+	and ((p1.safeArea=s1)=>((p1.safeArea!=s2) or (s1=s2)))
+}
+
+/**CAR FACT**/
+
+fact uniqueLicensePlate{
+    no disjoint c1, c2: Car | c1.licensePlate = c2.licensePlate
+}
+
+fact allCarstoCompany{
+    no c: Car | not (c in Company.cars)
+}
+
+/**USER FACT**/
+
+fact uniquePassword{
+     no disjoint u1,u2: User | u1.password=u2.password
+}
+
+fact uniqueDrivingLicense{
+    no disjoint u1, u2: User | u1.drivingLicense = u2.drivingLicense
+}
+
+/**RESERVATION FACT**/
+
+fact noOtherReservationTillReserved{}
+
 /**EXECUTION**/
 
 pred show(){}
-run show
+run show 
 
 
 
