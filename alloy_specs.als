@@ -185,6 +185,7 @@ fact differentCodeforDifferentReservation{
 /**RIDE FACT**/
 fact noUsingCarifinCharge{
 	no r: Ride | r.reservation.reservedCar.inCharge = True
+//	no r: Ride | r.reservation.reservedCar.inCharge=True and r.charging.plugginTime.progressive <r.endingTime.progressive and r.charging.plugginTime.progressive>r.startingTime.progressive
 }
 
 fact noUsingCarifOutOfService{
@@ -229,13 +230,14 @@ fact uniqueReservationPerTimePerUser{
 }
 
 /**WIP**/
+/*
 pred powerGridDiscount[r : Ride, at : ActualTime]{
     (r.endingTime.progressive=at.time.progressive) and (r.reservation.reservedCar.inCharge=True)
-}
+}*/
 
 
 /**EXECUTION**/
-run powerGridDiscount
-/*
+//run powerGridDiscount
+
 pred show(){}
-run show for 5 but exactly 3 Ride, 8 */
+run show for 5 but exactly 3 Ride, 8 Int
