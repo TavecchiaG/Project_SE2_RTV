@@ -94,6 +94,7 @@ sig Ride{
 }{
 	endingTime.progressive > startingTime.progressive
 	startingTime.progressive < reservation.endingTime.progressive
+	charging.plugginTime.progressive > endingTime.progressive
 }
 
 /**DISCOUNT**/
@@ -190,6 +191,11 @@ fact noUsingCarifOutOfService{
 	no r: Ride | r.reservation.reservedCar.outOfService = True
 }
 
+/**CHARGING FACT**/
+fact NoChargingWithoutRide{
+    all ch : Charging | (one r: Ride | r.charging = ch)
+}
+
 /**VARIOUS FACT**/
 fact noRideforsameReservation{
     all r: Ride, res1,res2: Reservation |
@@ -224,7 +230,9 @@ fact uniqueReservationPerTimePerUser{
 
 /**WIP**/
 
+
+
 /**EXECUTION**/
 
 pred show(){}
-run show for 5 but exactly 4 Reservation, exactly 3 User, 8 Int
+run show for 5 but exactly 3 Ride, 8 Int
