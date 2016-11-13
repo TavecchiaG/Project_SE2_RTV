@@ -205,11 +205,21 @@ fact RideReservationTime{
 }
 
 fact ifRideIsJustFinishedCarPositionEqualEndingPosition{
-    all r : Ride, c : Car | ((r.endingTime=ActualTime.time) and (r.reservation.reservedCar=c)) implies (r.endingPosition=c.position)
+    all r : Ride, c : Car | 
+	((r.endingTime=ActualTime.time) and (r.reservation.reservedCar=c)) 
+	implies (r.endingPosition=c.position)
 }
 
 fact noReservationWithMoreRides{
-	all res: Reservation, r1,r2: Ride | (r1.reservation=res) implies(( r2.reservation!=res) or (r1=r2))
+	all res: Reservation, r1,r2: Ride | 
+	(r1.reservation=res) implies(( r2.reservation!=res) or (r1=r2))
+}
+
+fact uniqueReservationPerTimePerUser{
+    all disjoint r1,r2 : Reservation, u : User | 
+	((r1.user=u) and (r2.user=u)) implies ((r1.startingTime!=r2.startingTime) and 
+	((r2.startingTime.progressive>r1.endingTime.progressive) or 
+	(r1.startingTime.progressive>r2.endingTime.progressive)))
 }
 
 /**WIP**/
@@ -217,4 +227,4 @@ fact noReservationWithMoreRides{
 /**EXECUTION**/
 
 pred show(){}
-run show for 5 but exactly 4 Reservation, 8 Int
+run show for 5 but exactly 4 Reservation, exactly 3 User, 8 Int
