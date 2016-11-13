@@ -229,10 +229,13 @@ fact uniqueReservationPerTimePerUser{
 }
 
 /**WIP**/
-
+pred powerGridDiscount[r : Ride, at : ActualTime]{
+    (r.endingTime.progressive=at.time.progressive) and (r.reservation.reservedCar.inCharge=True)
+}
 
 
 /**EXECUTION**/
-
+run powerGridDiscount
+/*
 pred show(){}
-run show for 5 but exactly 3 Ride, 8 Int
+run show for 5 but exactly 3 Ride, 8 */
