@@ -14,7 +14,13 @@ sig Position{
 sig Time{
     progressive: Int
 }{
-    progressive>0 and progressive <=525600
+    progressive>0 //and progressive <=525600
+}
+
+one sig ActualTime{
+    time : Time
+}{
+    time.progressive>0
 }
 
 sig LicensePlate{}
@@ -22,6 +28,8 @@ sig LicensePlate{}
 sig DrivingLicense{}
 
 sig Password{}
+
+sig Code{}
 
 /**AREA**/
 abstract sig Area{
@@ -67,9 +75,8 @@ sig Reservation{
 	user: User,
 	startingTime: Time,
 	endingTime: Time,
-	data: Int // to semplify our life LOL :D
+	unlockingCode: Code
 }{
-	data > 0
 	endingTime.progressive > startingTime.progressive
 }
 
@@ -144,6 +151,10 @@ fact noChargeThanNoPG{
 	all car: Car | (car.inCharge=False) implies (no pg:PowerGrid | car in pg.chargingCars)
 }
 
+fact ifBatteryLessThan5CarIsOutOfService{ 
+	all c: Car| (c.charge<5) implies (c.outOfService=True)
+}
+
 /**USER FACT**/
 fact uniquePassword{
      no disjoint u1,u2: User | u1.password=u2.password
@@ -164,6 +175,10 @@ fact sequentialReservation{
 	((res1.reservedCar = res2.reservedCar) => 
 	((res1=res2) or (res1.endingTime.progressive <= res2.startingTime.progressive) 
 	or (res1.startingTime.progressive >= res2.endingTime.progressive)))
+}
+
+fact differentCodeforDifferentReservation{
+    no disjoint r1, r2: Reservation | r1.unlockingCode = r2.unlockingCode
 }
 
 /**RIDE FACT**/
@@ -189,9 +204,17 @@ fact RideReservationTime{
 	or (res.endingTime.progressive<ride.startingTime.progressive)) 
 }
 
+fact ifRideIsJustFinishedCarPositionEqualEndingPosition{
+    all r : Ride, c : Car | ((r.endingTime=ActualTime.time) and (r.reservation.reservedCar=c)) implies (r.endingPosition=c.position)
+}
+
+fact noReservationWithMoreRides{
+	all res: Reservation, r1,r2: Ride | (r1.reservation=res) implies(( r2.reservation!=res) or (r1=r2))
+}
+
 /**WIP**/
 
 /**EXECUTION**/
 
-pred show{}
-run show 
+pred show(){}
+run show for 5 but exactly 4 Reservation, 8 Int
