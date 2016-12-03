@@ -2,6 +2,7 @@
 
 \usepackage{graphicx}
 \usepackage{listings}
+\usepackage[normalem]{ulem}
 
 \begin{document}
 \begin{titlepage}
@@ -136,7 +137,7 @@ In the world analysed for the development, we assume the properties defined belo
 \item [{[A11]}] We assume that the system will implement an algorithm to detect if a user is trying to avoid the correct payment for extending the reservation time. As example: a user is able to extend his reservation further than one hour with the payment of an additional charge. After the reservation has expired, the system will block the user to reserve the same car until at least 30 min are elapsed; if not, the user would be able to pay the fee of 1 euro for expiration time, then reserve again and he will pay a maximum of 1 euro per hour, which will lead to a loss of money for the company.
 \item [{[A12]}] We assume that if a car is connected to a power grid until 3 minutes from having parked, the system attributes that the car was put in charge by the last driver.
 \item [{[A13]}] We assume that all cars in the system can be seen such as a dumb terminal because they are set of sensors without any kind of logic on it. So, for this reasons, they inform through their sensor the system about the world's situation in which they are and the system reacts based on its own logic.
-\item [{[A14]}] We assume that all cars in the system can be seen such as a dumb terminal because they are set of sensors without any kind of logic on it. So, for this reasons, they inform through their sensor the system about the world's situation in which they are and the system reacts based on its own logic.
+\item [{[A14]}] \sout{We assume that all cars in the system can be seen such as a dumb terminal because they are set of sensors without any kind of logic on it. So, for this reasons, they inform through their sensor the system about the world's situation in which they are and the system reacts based on its own logic.}
 \end{itemize}
 \subsection{Constraints}
 \subsubsection{Regulatory policies}
@@ -1157,5 +1158,12 @@ Instance found. Predicate is consistent.
 \item Emanuele Ricciardelli: $\sim$ 34 hrs.
 \item Giorgio Tavecchia: $\sim$ 34 hrs.
 \item Francesco Vetr\'o: $\sim$ 34 hrs.
+\end{itemize}
+\addcontentsline{toc}{section}{Changelog}
+\section*{Changelog}
+\begin{itemize}
+\item v1.1
+\subitem - [A14] removed because duplication of [A13]
+\subitem - modified figure 9: State Diagram - Car
 \end{itemize}
 \end{document}
