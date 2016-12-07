@@ -1,6 +1,7 @@
 \documentclass[10pt, a4paper,titlepage]{article}
 
 \usepackage{graphicx}
+\usepackage{tabularx}
 \usepackage{listings}
 \usepackage[normalem]{ulem}
 
@@ -375,7 +376,7 @@ Rodd is a maintenance guy of the PowerEnjoy company. Shortly before a rude user 
 In this paragraph some of the above use cases will be described.
 \begin{table}[h]
 \caption{Guest registration} \label{tab:scenario1}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Guest register \\
 \hline
@@ -393,15 +394,13 @@ Flow of events & The guest visits the registration page of the system. \\
 \hline
 Exit conditions & The registration is confirmed and the new user receives his password. \\
 \hline
-Exceptions & One or more information provided by the guest is incorrect and the system \\
-& shows an error message, informing the guest to provide valid data and \\
-& doesn't send any password.\\
+Exceptions & One or more information provided by the guest is incorrect and the system shows an error message, informing the guest to provide valid data and doesn't send any password.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[h]
 \caption{User Login} \label{tab:scenario2}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & User login \\
 \hline
@@ -417,14 +416,13 @@ Flow of events & The guest visit the login page of the system. \\
 \hline
 Exit conditions & The user is successfully redirected to the main page. \\
 \hline
-Exceptions & The password provided is not correct and the system \\
-& doesn't redirect the user to the main page, asking him to enter a valid password.\\
+Exceptions & The password provided is not correct and the system doesn't redirect the user to the main page, asking him to enter a valid password.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[h]
 \caption{View available cars} \label{tab:scenario3}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & View available cars \\
 \hline
@@ -451,11 +449,11 @@ Exceptions & User select to provide GPS information but the system can't access 
 & In both cases, the system doesn't show any result\\
 & and ask to perform again the research.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[h]
 \caption{Reservation of a car} \label{tab:scenario4}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Reserve a car\\
 \hline
@@ -471,15 +469,13 @@ Flow of events & User selects one of the available cars.\\
 \hline
 Exit conditions & The reservation is confirmed and the user is redirected to the main page. \\
 \hline
-Exceptions &User select to reserves a car that was available at the beginning of the research\\
-& but it is now reserved by someone else. In this case the system\\
-& doesn't confirm the registration and shows an error message.\\
+Exceptions &User select to reserves a car that was available at the beginning of the research but it is now reserved by someone else. In this case the system doesn't confirm the registration and shows an error message.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[h]
 \caption{Delete reservation} \label{tab:scenario5}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Delete reservation \\
 \hline
@@ -497,17 +493,15 @@ Flow of events & User select “manage reservation”.\\
 & The system tag the car selected as available\\
 & The system charges the user if it is needed according to the company’s policy.\\
 \hline
-Exit conditions & The reservation  is deleted,\\
-& the car available again and the user is redirected to the main page\\
-& and eventually the user is charged.\\
+Exit conditions & The reservation is deleted, the car available again and the user is redirected to the main page and eventually the user is charged.\\
 \hline
 Exceptions & There are no exceptions.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[h]
 \caption{Extend length of a reservation} \label{tab:scenario6}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Extend reservation \\
 \hline
@@ -524,16 +518,15 @@ Flow of events & User select “manage reservation”.\\
 & The system update the reservation extending its time.\\
 & The system charge the user for the extension.\\
 \hline
-Exit conditions & The reservation  is extended,\\
-& the user is charged and redirected to the main page.\\
+Exit conditions & The reservation  is extended, the user is charged and redirected to the main page.\\
 \hline
 Exceptions & There are no exceptions.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[h]
 \caption{Rent of a car} \label{tab:scenario7}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Rent a car \\
 \hline
@@ -549,15 +542,13 @@ Flow of events & User reaches his reserved car.\\
 \hline
 Exit conditions & The reservation is completed and the system registers a new ride.\\
 \hline
-Exceptions & The user is near a car that he has not reserved,\\
-& the system detects it and notify him.\\
-& None of the two cars will be unlocked.\\
+Exceptions & The user is near a car that he has not reserved, the system detects it and notify him. None of the two cars will be unlocked.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[h]
 \caption{Money saving option} \label{tab:scenario8}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Enable money-saving option \\
 \hline
@@ -571,20 +562,15 @@ Flow of events & User selects to enable the money-saving option.\\
 & User confirm the destination.\\
 & The system provides a set of available power grids near the destination.\\
 \hline
-Exit conditions & The user is provided by a set of available power grids\\
-& to plug the car and achieve a discount\\
+Exit conditions & The user is provided by a set of available power grids to plug the car and achieve a discount.\\
 \hline
-Exceptions & The user insert an invalid destination.\\
-& In this case the system shows an error message and \\
-& asks the user to insert a valid address.\\
-& There aren’t available power grids,\\
-& in this case the system shows an error message.\\
+Exceptions & The user insert an invalid destination. In this case the system shows an error message and asks the user to insert a valid address. There aren’t available power grids, in this case the system shows an error message.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[h]
 \caption{Report a car's issue} \label{tab:scenario9}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Report car’s issue\\
 \hline
@@ -602,15 +588,13 @@ Flow of events & User selects to report an issue from the main page\\
 \hline
 Exit conditions & The issue is reported and the user can leave the car \\
 \hline
-Exceptions & The user provides an empty description, \\
-& in this case the system shows an error message \\
-& and asks to fill the description.\\
+Exceptions & The user provides an empty description, in this case the system shows an error message and asks to fill the description.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[h]
 \caption{Recharge a car} \label{tab:scenario10}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Recharge a car\\
 \hline
@@ -624,23 +608,19 @@ Flow of events & User exits from the car in a safe area with power grid.\\
 \hline
 Exit conditions & The car is now charging and the user's bill is discounted.\\
 \hline
-Exceptions & The system doesn’t detect the car’s plugging \\
-& because the user doesn’t correctly plug the car. \\
-& In this case the system will not provide the discount \\
-& to the user and the car will not be recharged.\\
+Exceptions & The system doesn’t detect the car’s plugging because the user doesn’t correctly plug the car. In this case the system will not provide the discount to the user and the car will not be recharged.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[h]
 \caption{View reported cars by maintenance and selection of one} \label{tab:scenario11}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & View reported cars\\
 \hline
 Actors & Maintenance system\\ 
 \hline
-Entry condition & At least one car has been reported, \\
-& the maintenance guy is already logged in the system\\
+Entry condition & At least one car has been reported, the maintenance guy is already logged in the system\\
 \hline
 Flow of events & Maintenance selects the “View reported cars” tab.\\
 & The system shows a list of cars reported.\\
@@ -653,42 +633,35 @@ Exit conditions & The maintenance goes to the position, the system update the re
 \hline
 Exceptions & There are no exceptions.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[h]
 \caption{Handle a car by maintenance} \label{tab:scenario12}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Handle car\\
 \hline
 Actors & Maintenance guy\\ 
 \hline
-Entry condition & At least one car has been reported, \\
-& the maintenance guy is already logged in the system\\
-& and has selected which cars to work on.\\
+Entry condition & At least one car has been reported, the maintenance guy is already logged in the system and has selected which cars to work on.\\
 \hline
-Flow of events & Maintenance goes to the position of the reported cars.\\
-& Maintenance identifies the problem.\\
+Flow of events & Maintenance goes to the position of the reported cars. Maintenance identifies the problem.\\
 & \textit{Alternatively:}\\
-& \textit{Maintenance moves the car to the nearest available power grid}\\
-& \textit{and plugs the car.}\\
+& \textit{Maintenance moves the car to the nearest available power grid and plugs the car.}\\
 & \textit{Maintenance verifies the damage and take the car away to repair it.}\\
 & \textit{Maintenance moves the car, parked in an unsafe area, to a safe area.}\\
 & \textit{(end of alternative flow)}\\
-& Maintenance notify the system and update the report of the car.\\
-& The system upgrade the report.\\
+& Maintenance notify the system and update the report of the car. The system upgrade the report.\\
 \hline
-Exit conditions & The report of the issue is updated with information related \\
-& to the specific intervention.\\
+Exit conditions & The report of the issue is updated with information related to the specific intervention.\\
 \hline
-Exceptions & The maintenance is not able to solve the problem, \\
-& in this case the system doesn’t update the form and wait to further actions.\\
+Exceptions & The maintenance is not able to solve the problem, in this case the system doesn’t update the form and wait to further actions.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \begin{table}[!t]
 \caption{Provide a payment} \label{tab:scenario13}
-\begin{tabular}{|l|l|}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Starting payment\\
 \hline
@@ -696,23 +669,17 @@ Actors & Logged user\\
 \hline
 Entry condition & User has successfully completed a ride and has not payed it yet.\\
 \hline
-Flow of events & The system elaborates all data related to the\\
-& ride and computes the charge for the user.\\
+Flow of events & The system elaborates all data related to the ride and computes the charge for the user.\\ 
 & The system notifies the user about the charge.\\
 & The system notifies the external payment company about the debt of the user.\\
-& The system suspends the user from the service\\
-& until the payment will be performed.\\
-& The user provides the payment with the payment \\
-& system selected during the registration.\\
+& The system suspends the user from the service until the payment will be performed.\\
+& The user provides the payment with the payment system selected during the registration.\\
 \hline
-Exit conditions & The payment is completed, the external company informs\\
-& the system and the user is again able to use \\
-& the functionalities of the car-sharing service.\\
+Exit conditions & The payment is completed, the external company informs the system and the user is again able to use the functionalities of the car-sharing service.\\
 \hline
-Exceptions & The payment is not performed: in this case the user\\
-& remains suspended and the external company provide to stress the user.\\
+Exceptions & The payment is not performed: in this case the user remains suspended and the external company provide to stress the user.\\
 \hline
-\end{tabular}
+\end{tabularx}
 \end{table}
 \clearpage
 \subsection{Class diagram}
@@ -1165,5 +1132,6 @@ Instance found. Predicate is consistent.
 \item v1.1
 \subitem - [A14] removed because duplication of [A13]
 \subitem - modified figure 9: State Diagram - Car
+\subitem - fixed layout
 \end{itemize}
 \end{document}
