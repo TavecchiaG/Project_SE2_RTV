@@ -7,7 +7,7 @@
 
 \begin{document}
 \begin{titlepage}
-\title{Requirement Analysis and Specification Document}
+\title{Requirement Analysis and Specification Document \\ Version 1.1}
 \author{Emanuele Ricciardelli (mat. 875221) \and Giorgio Tavecchia (mat. 874716) \and Francesco Vetr\'o (mat. 877593)}
 \begin{figure}
 \includegraphics{/home/francesco/git/Project_SE2_RTV/RASD/RASD_images/logopolimi.png}
@@ -730,7 +730,7 @@ Exceptions & The payment is not performed: in this case the user remains suspend
 \clearpage
 \section{Alloy modeling}
 \subsection{Model}
-\begin{lstlisting}
+\begin{lstlisting}{linewidth=textwidth}
 open util/boolean
 
 /**DRAFTS**/
@@ -975,7 +975,8 @@ fact minus20{
 }
 
 fact minus10{
-    all ride:Ride | (one disc: Discount| disc.value=-10 and disc in ride.discount) 
+    all ride:Ride | (one disc: Discount| disc.value=-10 and 
+		disc in ride.discount) 
 	iff 
 	(no disc2: Discount | disc2 in ride.discount and 
 	(disc2.value=-30))
