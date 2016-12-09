@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.7)  9 DEC 2016 14:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.7)  9 DEC 2016 18:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -305,14 +305,14 @@ Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ù in font cmr10!
  [7]
-</home/francesco/git/Project_SE2_RTV/DD/DD_images/ER.png, id=42, 818.05624pt x 
-1278.7775pt>
+</home/francesco/git/Project_SE2_RTV/DD/DD_images/ER.png, id=42, 795.97375pt x 
+1518.67375pt>
 File: /home/francesco/git/Project_SE2_RTV/DD/DD_images/ER.png Graphic file (typ
 e png)
  <use /home/francesco/git/Project_SE2_RTV/DD/DD_images/ER.png>
 Package pdftex.def Info: /home/francesco/git/Project_SE2_RTV/DD/DD_images/ER.pn
-g used on input line 111.
-(pdftex.def)             Requested size: 345.00429pt x 539.30733pt.
+g used on input line 112.
+(pdftex.def)             Requested size: 250.73306pt x 478.38477pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -325,14 +325,14 @@ ic file (type png)
 
 <use /home/francesco/git/Project_SE2_RTV/DD/DD_images/Component_view.png>
 Package pdftex.def Info: /home/francesco/git/Project_SE2_RTV/DD/DD_images/Compo
-nent_view.png used on input line 120.
+nent_view.png used on input line 122.
 (pdftex.def)             Requested size: 209.03043pt x 597.9826pt.
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ¢ in font cmr10!
 
 
-LaTeX Warning: Float too large for page by 40.38257pt on input line 124.
+LaTeX Warning: Float too large for page by 40.38257pt on input line 126.
 
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
@@ -352,34 +352,122 @@ hic file (type png)
 
 <use /home/francesco/git/Project_SE2_RTV/DD/DD_images/Deployment_view.png>
 Package pdftex.def Info: /home/francesco/git/Project_SE2_RTV/DD/DD_images/Deplo
-yment_view.png used on input line 155.
+yment_view.png used on input line 157.
 (pdftex.def)             Requested size: 266.03528pt x 418.5936pt.
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ¢ in font cmr10!
 
 [12 </home/francesco/git/Project_SE2_RTV/DD/DD_images/Deployment_view.png>]
-[13] (./DD.aux) ) 
+</home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_login.png, i
+d=64, 1205.50375pt x 1469.49pt>
+File: /home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_login.p
+ng Graphic file (type png)
+
+<use /home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_login.pn
+g>
+Package pdftex.def Info: /home/francesco/git/Project_SE2_RTV/DD/DD_images/seque
+nce_diagram_login.png used on input line 167.
+(pdftex.def)             Requested size: 343.3882pt x 418.58478pt.
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ¢ in font cmr10!
+ [13 </home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_login.p
+ng>]
+</home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_report.png, 
+id=69, 938.50626pt x 1668.2325pt>
+File: /home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_report.
+png Graphic file (type png)
+
+<use /home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_report.p
+ng>
+Package pdftex.def Info: /home/francesco/git/Project_SE2_RTV/DD/DD_images/seque
+nce_diagram_report.png used on input line 181.
+(pdftex.def)             Requested size: 235.48521pt x 418.58441pt.
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ¢ in font cmr10!
+ [14 </home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_report.
+png>]
+</home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_saving.png, 
+id=74, 847.165pt x 1660.2025pt>
+File: /home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_saving.
+png Graphic file (type png)
+
+<use /home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_saving.p
+ng>
+Package pdftex.def Info: /home/francesco/git/Project_SE2_RTV/DD/DD_images/seque
+nce_diagram_saving.png used on input line 193.
+(pdftex.def)             Requested size: 213.60046pt x 418.59618pt.
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ¢ in font cmr10!
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ú in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ú in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ú in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ù in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ú in font cmr10!
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ù in font cmr10!
+[15] [16 </home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_sav
+ing.png>]
+</home/francesco/git/Project_SE2_RTV/DD/DD_images/component_interfaces.png, id=
+82, 1217.54875pt x 706.64pt>
+File: /home/francesco/git/Project_SE2_RTV/DD/DD_images/component_interfaces.png
+ Graphic file (type png)
+
+<use /home/francesco/git/Project_SE2_RTV/DD/DD_images/component_interfaces.png>
+Package pdftex.def Info: /home/francesco/git/Project_SE2_RTV/DD/DD_images/compo
+nent_interfaces.png used on input line 208.
+(pdftex.def)             Requested size: 344.99855pt x 200.22998pt.
+Missing character: There is no ‚ in font cmr10!
+Missing character: There is no Ä in font cmr10!
+Missing character: There is no ¢ in font cmr10!
+[17
+
+ </home/francesco/git/Project_SE2_RTV/DD/DD_images/component_interfaces.png>] (
+./DD.aux) ) 
 Here is how much of TeX's memory you used:
- 3880 strings out of 493013
- 61370 string characters out of 6133328
- 126389 words of memory out of 5000000
- 7396 multiletter control sequences out of 15000+600000
+ 3904 strings out of 493013
+ 62863 string characters out of 6133328
+ 126426 words of memory out of 5000000
+ 7416 multiletter control sequences out of 15000+600000
  8347 words of font info for 30 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  40i,7n,39p,1444b,323s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr17.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cms
-y10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
-10.pfb>
-Output written on DD.pdf (14 pages, 388214 bytes).
+</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+bx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12
+.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.p
+fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
+b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
+>
+Output written on DD.pdf (18 pages, 632682 bytes).
 PDF statistics:
- 91 PDF objects out of 1000 (max. 8388607)
- 55 compressed objects within 1 object stream
+ 111 PDF objects out of 1000 (max. 8388607)
+ 63 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 51 words of extra memory for PDF output out of 10000 (max. 10000000)
 

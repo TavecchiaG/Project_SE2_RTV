@@ -108,9 +108,11 @@ In the right part of Figure 2 there is the \emph{Payment system}. This system is
 The \emph{Application server} needs to store and perform queries in order to perform all the tasks and so communicates with a database.
 \clearpage
 \begin{figure}[h]
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/ER.png}
+\begin{center}
+\includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/ER.png}
+\end{center}
 \caption{ER diagram}
-\caption*{\underline{Observation}: ID in \emph{Reservation} entity will later be converted into QR Code to enable the user to access the car that he has previously reserved.}
+\caption*{\underline{Observation}: ID in \emph{Reservation} entity will later be converted into QR Code to enable the user to access the car that he has previously reserved. \emph{ExtrainRes} is the set of all the operations that have been performed on a specific reservation that can involve an addition in the payment of the total cost, in our case just the \emph{extension} of the reservation time and the deletion (\emph{delete}) of the reservation itself.}
 \label{fig:ER}
 \end{figure}
 \clearpage
@@ -159,5 +161,53 @@ As shown in the diagram, the only access to the model and to the database it is 
 \end{figure}
 \newpage
 \subsection{Runtime view}
-
+\subsubsection{Login}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_login.png}
+\caption{Sequence diagram - login}
+\label{fig:sequence_diagram_login}
+\end{center}•
+\end{figure}
+In this sequence diagram it is represented the interaction among the components of the system in order to verify the correctness of the password entered by a user.
+After completing the login form, the request is forwarded to the \emph{Request manager} that, once identified, will forward it to the correct controller (in this case the\emph{Login / Registration controller}).
+It, to deal with the request, will perform a query on the database of the system in order to verify the presence or absence of a user with corresponding password to the one supplied.
+The new request is then forwarded to the \emph{Communication manager} that ultimately will apply it to the DB.
+The query result will be interpreted by the \emph{Login / Registration controller} that will send the confirmation, or not, of the login to the interface which started it.
+In this sequence diagram it is not represented the collection of all the information needed to display the user's homepage because it will be made only after effective login confirmation.
+\subsubsection{Report car issue}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_report.png}
+\caption{Sequence diagram - report car issue}
+\label{fig:sequence_diagram_report}
+\end{center}•
+\end{figure}
+In this sequence diagram it is shown the flow of information and instructions exchanged between the components for reporting car issue.
+The report starts from a user, that, with his own application fills out a form with all the details regarding the car and the problem.
+The request is now forwarded to the \emph{Car controller} that will seek to create a record for maintenance and will save it to the database, associating it to the corresponding car.
+Once this is done, the same \emph{Car controller} will perform a notification to the maintenance company that later will have access to the report and provide for the resolution of the problem.
+\subsubsection{Money saving option}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_saving.png}
+\caption{Sequence diagram - money saving option}
+\label{fig:sequence_diagram_saving}
+\end{center}•
+\end{figure}
+This sequence diagram shows the flow of instructions that allow the activation of the “money-saving” option during a ride.
+The user must provide his final destination in order to compute the shortest route to the nearest powegrid station to his destination.
+Once the driver has selected his destination, the system in the vehicle will interface to the PowerEnJoy server to provide the selected service: the request is received by the “CollectorData” which in turn will communicate to the “RideController”; the features of this controller are not limited only to the definition of rides and their stages, but will contain all the logic required for the above described functionality.
+First, the “Ride Controller” will perform a query on the database in order to locate the nearest (and available) power grid station to the destination; Once that is done, the controller will interface with the APIs provided by Google Maps to compute the road.
+Finally, it will send the result of this computation to the driver who asked it.
+\clearpage
+\subsection{Component interfaces}
+In this section are explained the interfaces that the system provides to the applications that connect to it. For each of them it is described the methods that are made available and the parameters necessary for their proper execution.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/component_interfaces.png}
+\caption{Component interfaces}
+\label{fig:scomponent_interfaces}
+\end{center}•
+\end{figure}
 \enddocument
