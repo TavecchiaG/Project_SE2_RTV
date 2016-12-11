@@ -328,7 +328,8 @@ public void extendReservation(Reservation res){
 This algorithm, as previously mentioned in the RASD, will prevent a user carries out a number of reservations, without extending them, causing financial damage to the company.
 \begin{lstlisting}[language=Java][width=\textwidth]
 public Reservation newReservation(User user,Car car){
-    if(lastCarReserved(user).equals(car) && timeLastExpiredReservation(user)<30)
+    if(lastCarReserved(user).equals(car) && 
+	timeLastExpiredReservation(user)<30)
         return null;
     else
         return new Reservation(user,car);
@@ -426,6 +427,11 @@ public Position moneySavingDistribution(Position destination){
 \end{center}•
 \end{figure}
 \clearpage
+\subsection{APIs}
+\subsubsection{Maintenance system}
+In order to keep all the cars working and having a more accessible service, as number of cars available for a user, we have decided to rely on the operations of an external company that will work on the maintenance of the cars. We decided to furnish the company with our API for car maintenance such that all the information about a \emph{malfunctioning} car are handled by our partner. In this case, the term \emph{malfunctioning} means all possible problems that our electric cars can face: for instance the battery charge is below the 5\% or other problems that the \emph{car sensors subsystem} stated in \emph{high level components diagram} in Figure ~\ref{fig:tier_levels} at page ~\pageref{fig:tier_levels} or even a user-reported problem. Our system-to-be will store the information regarding all the \emph{malfunctions} and will notify the \emph{maintenance system} via our API. The maintenance company will be able to read the problems related to every car and will modify the status of the problem: e.g. a car has a battery charge below 5\%, the maintenance personnel will mark as \emph{Work In Progress (WIP)} the record of the service, the personnel will perform all operations needed in order to put the car in charge and then will mark the record as \emph{completed} so that the car can be available again. The operations performed by the maintenance company are of no interest for our system: what matter is the fact that the car is out of service for a variable period of time and then back available again.
+\subsubsection{Payment system}
+In order to keep track of all performed payments and to ensure a \emph{fair} use of the PowerEnJoy service, our system-to-be will be interfaced with different payment systems (right part of \emph{high level components diagram} in Figure ~\ref{fig:tier_levels} at page ~\pageref{fig:tier_levels}). The \emph{fair} term, in this context, is based on the fact that an user can possibly have pending payments: in this case the system will not allow the insolvent user to request for other reservation. We will furnish all recognized payment systems with our API for money transfers that will send a request to the user-specified payment system of a bill that must be paid. The payment system will answer and, if the answer is positive and the transaction has been successful, the client is able to continue using our car sharing service. Otherwise, in a negative answer situation from the payment system, our system will temporary suspend the user from the service, until a new and affirmative notification from the payment system will be received. 
 \section{Requirements traceability}
 This last section is devoted to the representation of how the goals and requirements identified and expressed in previous document (RASD) now find their concretization in the design choices made.
 Provided below is a list of goals previously identified and, for each of them, there are expressed the components and architectural aspects which allow their realization
@@ -518,8 +524,8 @@ When we refer to the \emph{Request Manager} we implicitly also intend the use of
 \addcontentsline{toc}{section}{Work hours}
 \section*{Work hours} 
 \begin{itemize}
-\item Emanuele Ricciardelli: $\sim$ 34 hrs.
-\item Giorgio Tavecchia: $\sim$ 34 hrs.
-\item Francesco Vetr\'o: $\sim$ 34 hrs.
+\item Emanuele Ricciardelli: $\sim$ 30 hrs.
+\item Giorgio Tavecchia: $\sim$ 30 hrs.
+\item Francesco Vetr\'o: $\sim$ 30 hrs.
 \end{itemize}
 \enddocument
