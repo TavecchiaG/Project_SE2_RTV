@@ -112,7 +112,7 @@ The \emph{Application server} needs to store and perform queries in order to per
 \includegraphics[width=\textwidth,height=0.8\textheight,keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/ER.png}
 \end{center}
 \caption{ER diagram}
-\caption*{\underline{Observation}: ID in \emph{Reservation} entity will later be converted into QR Code to enable the user to access the car that he has previously reserved. \emph{ExtrainRes} is the set of all the operations that have been performed on a specific reservation that can involve an addition in the payment of the total cost, in our case just the \emph{extension} of the reservation time and the deletion (\emph{delete}) of the reservation itself.}
+\caption*{\underline{Observation}: ID in \emph{Reservation} entity, combined with the user and car's informations, will later be converted into QR Code through cryptography algorithms to enable the user to access the car that he has previously reserved. \emph{ExtrainRes} is the set of all the operations that have been performed on a specific reservation that can involve an addition in the payment of the total cost, in our case just the \emph{extension} of the reservation time and the deletion (\emph{delete}) of the reservation itself.}
 \label{fig:ER}
 \end{figure}
 \clearpage
@@ -128,7 +128,7 @@ The component view consists of the following components:
 \begin{itemize}
 \item \textbf{Client}: client’s device used to connect to the service
 \item \textbf{Maintenance}: maintenance device used to interact with the system in order to provide maintenance features.
-\item \textbf{Payment system}: third party device used to provide information about payments, their completion and other information relating.
+\item \textbf{Payment system}: third party device used to provide information about payments, their completion and other relating information.
 \item \textbf{Request manager}: manager used to receive request from the outside and to route them to the correct controller. 
 \item \textbf{Login/Registration controller}: manage login and registration aspects
 \item \textbf{Reservation controller}: manage reservation aspects.
