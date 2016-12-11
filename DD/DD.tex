@@ -192,6 +192,7 @@ Once this is done, the same \emph{Car controller} will perform a notification to
 \begin{center}
 \includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/sequence_diagram_saving.png}
 \caption{Sequence diagram - money saving option}
+\caption*{\underline{Observation}: \emph{Communication manager} is here duplicated only for meanings of readability, in the system-to-be is only a single instance.}
 \label{fig:sequence_diagram_saving}
 \end{center}•
 \end{figure}
@@ -210,4 +211,315 @@ In this section are explained the interfaces that the system provides to the app
 \label{fig:scomponent_interfaces}
 \end{center}•
 \end{figure}
+\subsection{Selected architectural styles and patterns}
+Reflecting on the architectural design of the system-to-be, we identified some styles and patterns that best reflect our idea of design, as well as provide us with a solid structure on which to base our development.
+\subsubsection*{Client-Server}
+Since the first description of the system-to-be we identified in the model a distinction between the logic of the system and the users themselves; this type of functionality distinction is reflected in the architecture of client-server.
+In particular, we decided to develop an architecture based on 3-Tier where the client is of type “thin”.
+This allowed us to keep the client side as light as possible, so as to concentrate the computational power of the devices on only GUI aspects. 
+On the other hand, the large computational load required by the servers will be guaranteed, both from a reliability and efficiency point of view, through the use of cloud computing, which will allow us to have an easily scalable service.
+A client server architecture of this type, in addition to the advantages mentioned above, allows us to guarantee a high level of security, because the clients do not directly access the data contained in the database as well as have no dependence on each other.
+Finally, since the clients use interfaces provided by the server, and does not compute any functional activity, future service enhancement will be completely transparent to all clients themselves.
+\subsubsection*{Adapter}
+As visible in the \emph{Component View} (\S 2.3), we designed our system dividing the functions that must be provided in multiple controllers,each covering a single aspect of the system.
+This, as previously described, allows us to maintain a high degree of cohesion between the various components, as well as allowing us to manage them in a more elastic way.
+However, the breakdown of the more system controllers introduces a problem concerning the exchange of information between them. The system will not present direct links between these but, through the “Communication Manager” will implement the Adapter pattern. This will permit to separate the development of a component from the surrounding ones, to which ,using interfaces, will be fully transparent.
+\subsubsection*{MVC}
+The Model-View-Controller pattern will cover an important role in our system. As described in the component view, we decide to separate the internal representations of data from the ways that information is provided to the users. 
+The view is composed by all kind of clients that can connect and operate on the system-to-be.
+The controller part is our application server and it contains all the logic of the system.
+The model cover the rule of managing the data of the service itself.
+With the use of this pattern we do not permit any direct access to data from clients, without going through the controller section.
+\subsection{Other design decisions}
+Since that our service must ensure a high degree of efficiency, both in terms of response times and of the number of users connected simultaneously, we suggest the development of the web server on NginX.
+This type of web server is in fact able to ensure indexes of performance as mentioned above, basing its computation on an asynchronous approach to events.
+The server will be based on non-blocking operations, thus able to not slow down the overall operation in case of high level of parallelism, as it would happen in Apache web server.
+\section{Algorithms design}
+In this section we want to provide a short description of some useful code that will be implemented in the future system.
+\addcontentsline{toc}{subsection}{Discounts' assignation}
+\subsection*{Discounts' assignation}
+This algorithm will manage to properly assign discount at the end of a ride:
+\begin{lstlisting}[language=Java][width=\textwidth]
+public List<Discount> computeDiscounts(Ride ride){
+    List<Discount> discounts=new ArrayList<Discount>();
+    Car car=ride.getCar();
+    
+    if(car.isInCharge())
+        discounts.add(new PowerGridDiscount());
+    else{
+        if(car.getPosition().distanceFromNearestPG()>3){//3km
+            discounts.add(new MalusDistance3());
+        }
+        else{
+            if(car.getCharge()<=20)   //20%
+                discounts.add(new MalusBattery20());
+        }
+        if(car.getCharge()>=50)   //50%
+            discounts.add(new Battery50Discount());
+    }
+    if(ride.numPassengers()>2)
+        discounts.add(new PassengersDiscount());
+        
+    return discounts;
+}
+\end{lstlisting}
+\bigskip
+\bigskip
+\addcontentsline{toc}{subsection}{Ride's end}
+\subsection*{Ride's end}
+This algorithm will enclose all the functions required to terminate a ride. We consider the execution starting point as the moment at which it takes place the closure signal provided by the concerned machine.
+\begin{lstlisting}[language=Java][width=\textwidth]
+public void endRide(Reservation res){
+    Ride ride=res.getRide();
+        if(ride==null) return;
+
+
+    if(!ride.getCar().getPosition().isSafeArea())
+        MaintenanceManager.report(ride.getCar());
+    
+
+
+    List<Discount> discounts=new ArrayList<Discount>();
+    
+    //Set informations
+    ride.setFinalPosition(ride.getCar().getPosition());
+    ride.setEndingTime(System.currentTime());
+    
+    //Computation price
+    float price=res.calculatePrice();
+    
+    discounts=DiscountManager.computeDiscounts(ride);
+    for(Discount d: discounts)
+        price += d.getValue()*price;        
+    
+    res.register(price);//Will notify the payment system
+    res.close();//Storage on DB
+}
+
+
+public float calculatePrice(){
+    float totalPrice=0;
+    Ride ride=this.getRide()
+    totalPrice+=ride.getBill();//Bill related to the only travel time
+    List<Extras> extras=ExtraInRes.getAllExtras(this.getId());
+    for(Extras e:extras){
+        totalPrice+=e.getValue();   
+}
+    return totalPrice;
+}
+\end{lstlisting}
+\bigskip
+\emph{ExtrainRes} is the set of all the operations that have been performed on a specific reservation that can involve an addition in the payment of the total cost, in our case just the \emph{extension} of the reservation time and the deletion (\emph{delete}) of the reservation itself. 
+\addcontentsline{toc}{subsection}{Reservation's extension}
+\subsection*{Reservation's extension}
+This code will be executed when a user want to extend his reservation.
+\begin{lstlisting}[language=Java][width=\textwidth]
+public void extendReservation(Reservation res){
+    res.setEndingTime(
+	new Time(res.getEndingTime().getHour+1,
+		res.getEndingTime().getMinute(),
+		res.getEndingTime().getSecond());
+
+    ExtraInRes.createNewExtra("extension", res.getId());
+}
+\end{lstlisting}
+\bigskip
+\bigskip
+This algorithm, as previously mentioned in the RASD, will prevent a user carries out a number of reservations, without extending them, causing financial damage to the company.
+\begin{lstlisting}[language=Java][width=\textwidth]
+public Reservation newReservation(User user,Car car){
+    if(lastCarReserved(user).equals(car) && timeLastExpiredReservation(user)<30)
+        return null;
+    else
+        return new Reservation(user,car);
+}
+\end{lstlisting}
+\addcontentsline{toc}{subsection}{Money saving option}
+\subsection*{Money saving option - Car's distribution}
+This algorithm will implement the uniform distribution of cars when enabling the money-saving option.
+\begin{lstlisting}[language=Java][width=\textwidth]
+public Position moneySavingDistribution(Position destination){
+    
+    List<PowerGrid> powerGrids=DBManager.getAllPowerGrid();
+    List<PowerGrid> selected=new ArrayList<>();
+    for(PowerGrid pg: powerGrids){
+        if(pg.isReachable(destination))
+            selected.add(pg);
+    }
+
+    HashMap<SafeArea,Integer> map=new HashMap<>();
+    for(PowerGrid pg: selected){
+	SafeArea s=DBManager.getAreaByID(pg.getAreaID());
+		if(map.get(s)==null){
+    			map.put(s,pg.getCapacity());
+		}else{
+    			int val=map.get(s);
+			val+=pg.getCapacity();
+			map.put(s,val);
+		}
+    }
+
+    SafeArea safeWithMin=s;
+    int min=DBManager.getNumberOfCars(s);
+    for(SafeArea s2: map.keySet()){
+	int cars=DBManager.getNumberOfCars(s2);
+    	if(cars<map.get(s2)){
+        		if(cars<min){
+			safeWithMin=s2;
+        			min=map.get(s2);
+		}
+    	}
+    }
+    return safeWithMin.getPosition();
+}
+\end{lstlisting}
+\section{User interface design}
+\subsection{Mockups}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/mockup_homeweb.png}
+\caption{Mockup - Home page web application}
+\label{fig:mockup_homeweb}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/mockup_reservationweb.png}
+\caption{Mockup - Reservation page web application}
+\label{fig:mockup_reservationweb}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/mockup_reservationwebok.png}
+\caption{Mockup - Reservation successful page web application}
+\label{fig:mockup_reservationwebok}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/mockup_manageweb.png}
+\caption{Mockup - Manage reservation page web application}
+\label{fig:mockup_manageweb}
+\end{center}•
+\end{figure}
+\clearpage
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=1.5\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/mockup_mobile.png}
+\caption{Mockup - Mobile app}
+\label{fig:mockup_mobile}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/UX.png}
+\caption{UX}
+\label{fig:UX}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/BCE.png}
+\caption{BCE}
+\label{fig:BCE}
+\end{center}•
+\end{figure}
+\clearpage
+\section{Requirements traceability}
+This last section is devoted to the representation of how the goals and requirements identified and expressed in previous document (RASD) now find their concretization in the design choices made.
+Provided below is a list of goals previously identified and, for each of them, there are expressed the components and architectural aspects which allow their realization
+\begin{itemize}
+\item[{[G1]}] Guest must be able to register himself in the system.
+\subitem - Request Manager 
+\subitem - Login/Registration Controller
+\subitem - Notification Helper
+\subitem - Request Manager 
+\subitem - Login/Registration Controller
+\subitem - Notification Helper
+\item[{[G2]}] User must be able to log in and use the system, if registered.
+\subitem - Request Manager
+\subitem - Login/Registration Controller
+\subitem - Reservation Controller
+\subitem - Notification Helper
+\subitem - Communication Manager
+\item[{[G3]}] User must be able to insert a specified address or his current location to find available cars within a certain distance selected by the user himself.
+\subitem - Request Manager
+\subitem - Reservation Controller
+\subitem - Communication Manager
+\subitem - Cars Controller
+\item[{[G4]}] User must be able to reserve a car for up one hour in advance.
+\subitem - Reservation Controller
+\subitem - Notification Helper
+\item[{[G5]}] User must pay a fee of 1 euro if the reserved car is not picked up within an hour from the reservation.
+\subitem - Reservation Controller
+\subitem - Communication Manager
+\subitem - Payment Controller
+\subitem - Cars Controller
+\item[{[G6]}] User must be able to extend his reservation with the payment of a further charge.
+\subitem - Request Manager
+\subitem - Reservation Controller
+\subitem - Communication Manager
+\subitem - Payment Controller
+\subitem - Cars Controller
+\item[{[G7]}] User must be able to notify to the system that he is nearby a reserved car in order to pick it up.
+\subitem - Reservation Controller
+\subitem - Cars Controller
+\subitem - Communication Manager
+\subitem - Collector Data
+\item[{[G8]}] User must be able to visualize the current charge of his fare.
+\subitem - Ride Controller
+\subitem - Communication Manager
+\subitem - Collector Data
+\item[{[G8]}] As soon as the engine ignites, the charge is calculated based on the duration of the service.
+\subitem - Reservation Controller
+\subitem - Ride Controller
+\subitem - Communication Manager
+\subitem - Collector Data
+\item[{[G9]}] User must be notified if his reserved car becomes out of service and it is no longer available.
+\subitem - Cars Controller
+\subitem - Communication Manager
+\subitem - Request Manager
+\subitem - Maintenance Gateway
+\subitem - Notification Helper
+\item[{[G10]}] User must be able to notify to the company if the reserved car is damaged or not properly working, during their ride or before to pick up the car.
+\subitem - Request Manager
+\subitem - Communication Manager
+\subitem - Cars Controller
+\item[{[G11]}] Users could achieve different discounts if they satisfy different conditions.
+\subitem - Ride Controller
+\subitem - Cars Controller
+\subitem - Collector Data
+\subitem - Communication Manager
+\item[{[G12]}] It is applied a further 30\% on the ride if the car is parked in one or both of this situations:
+\begin{enumerate}
+\item The car is left at more than 3Km from a power grid.
+\item The car is left with less than 20\% of the battery.
+\end{enumerate}
+\subitem - Cars Controller
+\subitem - Communication Manager
+\subitem - Collector Data
+\subitem - Ride Controller
+\subitem - Payment Controller
+\item[{[G13]}] User must be able to enable a money-saving option.
+\subitem - Collector Data
+\subitem - Communication Manager
+\subitem - Ride Controller
+\end{itemize}•
+When we refer to the \emph{Request Manager} we implicitly also intend the use of the interfaces provided by our system to the various applications.
+\addcontentsline{toc}{section}{Used tools}
+\section*{Used tools}
+\begin{itemize}
+\item Github: for version control
+\item GoogleDoc: to write the document
+\item Draw.io: to create the diagrams
+\item \LaTeX: to create the pdf
+\end{itemize}
+\addcontentsline{toc}{section}{Work hours}
+\section*{Work hours} 
+\begin{itemize}
+\item Emanuele Ricciardelli: $\sim$ 34 hrs.
+\item Giorgio Tavecchia: $\sim$ 34 hrs.
+\item Francesco Vetr\'o: $\sim$ 34 hrs.
+\end{itemize}
 \enddocument
