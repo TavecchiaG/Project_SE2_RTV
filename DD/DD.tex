@@ -199,7 +199,7 @@ Once this is done, the same \emph{Car controller} will perform a notification to
 This sequence diagram shows the flow of instructions that allow the activation of the “money-saving” option during a ride.
 The user must provide his final destination in order to compute the shortest route to the nearest powegrid station to his destination.
 Once the driver has selected his destination, the system in the vehicle will interface to the PowerEnJoy server to provide the selected service: the request is received by the “CollectorData” which in turn will communicate to the “RideController”; the features of this controller are not limited only to the definition of rides and their stages, but will contain all the logic required for the above described functionality.
-First, the “Ride Controller” will perform the proper algorithm developed to find the right PowerGrid in order to reach the purpose of this functionality. Second,it will perform a query on the database in order to retreive the information about the location of the chosen Power Grid; Once that is done, the controller will interface with the APIs provided by Google Maps to compute the road.
+The “Ride Controller” will perform the proper algorithm developed to find the right PowerGrid in order to reach the purpose of this functionality. Once that is done, the algorithm will have figured out the position information of the proper PowerGrid and then the controller will interface with the APIs provided by Google Maps to compute the road.
 Finally, it will send the result of this computation to the driver who asked it.
 \clearpage
 \subsection{Component interfaces}
