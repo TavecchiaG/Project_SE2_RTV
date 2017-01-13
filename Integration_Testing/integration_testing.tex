@@ -1,0 +1,111 @@
+\documentclass[10pt, a4paper,titlepage]{article}
+
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[normalem]{ulem}
+\usepackage{caption}
+\usepackage[bottom]{footmisc}
+
+\begin{document}
+\begin{titlepage}
+\title{Integration Testing Document \\Version 1.0}
+\author{Emanuele Ricciardelli (mat. 875221) \and Giorgio Tavecchia (mat. 874716) \and Francesco Vetr\'o (mat. 877593)}
+\begin{figure}
+\begin{center}
+\includegraphics{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/logopolimi.png}
+\caption{Politecnico di Milano}
+\label{fig:logo}
+\end{center}
+\end{figure}
+\maketitle
+\end{titlepage}
+\tableofcontents
+\pagebreak
+\section{Introduction}
+\subsection{Purpose}
+This document represents the Integration Testing Plan Document for PowerEnJoy service.
+The purpose of the testing is to verify and ensure that the system operation is correct and complies with all the requirements expressed in the previous documents (RASD and DD). All components of the system will have to comply with the constraints and functionalities for which they were designed, without showing unexpected behavior.
+The purpose of this document resides therefore in specifying the methods and the time needed to complete a full testing, both from the point of view of the individual components, both in their interactions.
+In order to provide a detailed description of the future testing, in the following paragraphs it will be defined:
+\begin{itemize}
+\item A list of the subsystems and their subcomponents of the PowerEnJoy system-to-be that will be involved in the testing activity;
+\item The criteria that must be met by the project status before integration testing of the outlined elements may begin;
+\item A description of the integration testing approach and the rationale behind the specific choose;
+\item The sequence of component and function integration;
+\item A description of individual steps and test description: for each step of integration, we will define a test design with related expected results for each test;
+\item A list of tools, test equipment and test data required.
+\end{itemize}•
+\subsection{Definitions and Abbreviations}
+\begin{itemize}
+\item RASD: Requirement Analysis and Specification Document;
+\item DD: Design Document;
+\end{itemize}•
+\emph{For all other definitions, please refer to previous documents listed in the next paragraph}
+\subsection{Reference Documents}
+\begin{itemize}
+\item Specification document: Assignments AA 2016-2017.pdf
+\item RASD Version 1.1
+\item DD Version 1.1
+\item Integration testing example document.pdf
+\end{itemize}•
+\section{Integration strategy}
+\subsection{Entry criteria}
+With reference to the past documents and in particular to the design document, it is necessary to specify how the individual components that make up the system require to achieve a given percentage of completion with respect to the features for which they were designed.
+Especially, with respect to the High Level Component view of the Design Document:
+\begin{itemize}
+\item 100\% for the DBMS component: in order to allow a correct testing not only of the database structure itself, but also of the various components of the system that base their operation on access to the database;
+\item 60\% of the Client components: many of the functions covered by the client involve the GUI and have no priority over interaction with the system functionality;
+\item 90\% of the Application Server;
+\item 90\% of the Car Sensor Subsystem: in order to ensure a correct testing of the application server, given the close interaction.
+\end{itemize}•
+These criteria must be met before the start of the Integration testing. Different percentages want to reflect the order of integration, placed its focus on certain components, and otherwise in the background some secondary aspects such as the graphical user interface on the client.
+\subsection{Elements to be integrated}
+In order to specify the elements to be integrated, we refer not only to High Level Component view contained in the DD, but also to the Component view that allows us to identify components at a lower level and the relationships between them .
+As specified in the Design Document, the components of our system have been designed in such a way as to ensure a high level of modularity, by separating the different functionality into distinct components, thus also facilitating testing.
+For this reason, right from the Component view it is possible to note how different components are strongly dependent on one another in order to achieve more complex functionality of the system-to-be.
+The recognition of these complex functionality allows us to split our system into a number of subsystems, addressed respectively to the access management and registration system (\emph{Account Subsystem}), management of payments (\emph{Payment subsystem}), reservation management and everything that concerns the sphere of rental (\emph{Reservation subsystem}) and finally management of all the sensors and the exchange of information between cars and system and everything related to the maintenance (\emph{Car / Sensors subsystem}).
+In particular, the functions relating to the \emph{Reservation subsystem} will involve the integration of:
+\begin{itemize}
+\item Reservation Controller;
+\item Ride Controller (integrated with Google Maps API);
+\item Notification Helper (with related gateway);
+\item Communication Manager;
+\item Request Manager;
+\item Data Access Manager.
+\end{itemize}•
+With respect to the \emph{Account subsystem}, it is concentrated only in the \emph{Login / Registration Controller} that later, through the \emph{Communication Manager}, will interface with the other components of the PowerEnJoy system. In detail:
+\begin{itemize}
+\item Login/Registration Controller;
+\item Communication Manager;
+\item Request Manager;
+\item Notification Helper (with related gateway);
+\item Data Access Manager.
+\end{itemize}•
+The same reasoning can be made for the \emph{Payment subsystem} and the respective \emph{Payment Controller}. In detail:
+\begin{itemize}
+\item Request Manager;
+\item Payment Controller;
+\item Communication Manager;
+\item Data Access Manager;
+\item Payment Gateway;
+\end{itemize}
+Finally, the \emph{Car / Sensors subsystem} in order to perform all its functionalities will need to integrate:
+\begin{itemize}
+\item Cars Controller;
+\item Communication Manager;
+\item Collector Data (with related gateway);
+\item Maintenance Gateway;
+\item Request Manager;
+\item Data Access Manager;
+\end{itemize}•
+It is important to underline that the components \emph{Notification Helper} \emph{Request Manager} and \emph{Communication Manager} are significant for all subsystems and therefore their integration. This means that if on the one hand their presence ensures greater flexibility in the management of functions, on the other hand emphasizes the importance of their proper functioning in order to ensure the fulfillment of all the functionality of the overall system.
+Given the above definitions of subsystems, our integration testing will proceed initially considering a single subsystem at a time, following finally with the integration of the same until the establishment of the system in its entirety.
+\subsection{Integration testing strategy}
+The approach suggested in the process of integration testing is bottom-up.
+This choice is based on considerations relating to the features covered by our system: in particular, as has been documented in the DD, it has been chosen to decompose the system into a series of components, each with features related to a particular field. The functionalities that the system will perform are derived from joint work of these components. From this observation it can be seen that the choice of a bottom-up reflects the needs of the testing related to our system.
+In this way we can favour the ability to identify problems at an early stage of development of the components and, in case, to react quickly. 
+Later, after having tested the elementary interactions between components and subsystems, we can proceed with the integration to a higher level.
+It will therefore be necessary to develop a set of drivers to drive the testing, but given the simultaneous development of the overall system, this will prove to be quite natural.
+Once the system will be completely formed, we shall provide the implementation of a series of System Testing in order to verify not only the achievement of the functional requirements, as a whole, but also of the non-functional aspects such as the loading capacity as a function of the expected values.
+
+\end{document}
