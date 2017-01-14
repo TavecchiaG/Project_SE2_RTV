@@ -107,5 +107,194 @@ In this way we can favour the ability to identify problems at an early stage of 
 Later, after having tested the elementary interactions between components and subsystems, we can proceed with the integration to a higher level.
 It will therefore be necessary to develop a set of drivers to drive the testing, but given the simultaneous development of the overall system, this will prove to be quite natural.
 Once the system will be completely formed, we shall provide the implementation of a series of System Testing in order to verify not only the achievement of the functional requirements, as a whole, but also of the non-functional aspects such as the loading capacity as a function of the expected values.
-
+\subsection{Sequence of component / function integration}
+In this section we will provide a description of the order of integration testing of components and subsystems of PowerEnJoy system-to-be.
+\subsubsection{Software integration sequence}
+Given the previous subdivision into subsystems and starting from the \emph{Reservation subsystem}, we now define the sequence in which the components will be integrated for each subsystem and then the sequence related to the integration of the subsystems themselves.
+\paragraph{Reservation subsystem}\mbox{}\\
+Since many features covered by this system need an interaction with the database (performing queries or updating tables), the very first components to be integrated are the \textbf{Data Access Manager} and the \textbf{DBMS}.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.2\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence1.png}
+\caption{Integration sequence - 1 - Data Access Manager, DBMS}
+\label{fig:int_seq1}
+\end{center}•
+\end{figure}
+As will later be made clear, this first integration will also be required for other subsystems, but will not be repeated if it is unnecessary; otherwise it will be repeated the possible variants of integration between these first components and the surrounding ones.
+With respect to the bottom-up approach, the next integration step will cover the correct communication between the database and the \textbf{Communication Manager}.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence2.png}
+\caption{Integration sequence - 2 - Communication Manager \& above}
+\label{fig:int_seq2}
+\end{center}•
+\end{figure}
+We can now proceed to a higher level of integration considering the \textbf{Ride Controller}:
+this component will be integrated with the API provided by the services of google in order to verify the correct use within their own methods, with the "Notification Helper" in order to verify the correct sending of notifications generated to users, and finally with \textbf{Communication Manager} which, as described in the DD, is designed to allow (in a flexible and transparent way) the exchange of information between internal components of the system, to verify proper access to the database.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence3.png}
+\caption{Integration sequence - 3 - Ride Controller, Notification Helper, Google APIs \& above}
+\label{fig:int_seq3}
+\end{center}•
+\end{figure}
+At the same level of integration we will introduce the \textbf{Reservation Controller} integrated with \textbf{Communication Manager} and \textbf{Notification Helper} for the same reasons mentioned above.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence4.png}
+\caption{Integration sequence - 4 - Reservation Controller \& above}
+\label{fig:int_seq4}
+\end{center}•
+\end{figure}
+\clearpage
+Since different functions performed by the controller such as \textbf{Reservation Controller} and \textbf{Ride Controller} are performed by request from external clients, and given that the same demands are made through the component \textbf{Request Manager}, the next components to be integrated will be the following.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence5.png}
+\caption{Integration sequence - 5 - Request Manager \& above}
+\label{fig:int_seq5}
+\end{center}•
+\end{figure}
+\clearpage
+This will make it possible to test the correct routing of requests towards the selected components and the exchange of information between them.
+Finally we integrate the Client, to test that all of the functionalities of this subsystem work properly.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.5\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence6.png}
+\caption{Integration sequence - 6 - Client \& above}
+\label{fig:int_seq6}
+\end{center}•
+\end{figure}
+\clearpage
+\paragraph{Account subsystem}\mbox{}\\
+The starting point relative to the sequence of integration of this subsystem should be regarding the access to the database, but, as previously expressed, since it was done for the previous subsystem, it is not required to do it again. It is now shown for the sake of completeness to the reader.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.2\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence1.png}
+\caption{Integration sequence - 1 - Data Access Manager, DBMS}
+\label{fig:int_seq1_1}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence2.png}
+\caption{Integration sequence - 2 - Communication Manager \& above}
+\label{fig:int_seq2_1}
+\end{center}•
+\end{figure}
+\pagebreak
+We follow now with the integration between the \textbf{Login / Registration Controller} and \textbf{Notification Helper} to verify, as done in the previous subsystem, the correct forwarding of notifications generated and, at the same time, integrating  the \textbf{Login / Registration Controller} with \textbf{Communication Manager} and \textbf{Data Access Manager} in order to test the proper functioning of methods that require database access.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence7.png}
+\caption{Integration sequence - 7 - Login/Registration Controller, Notification Helper \& above}
+\label{fig:int_seq7}
+\end{center}•
+\end{figure}
+Going up to a higher level of integration, we introduce the \textbf{Request Manager} in order to test the correct routing of requests coming from the outside to the component suited to the management of the system accounts.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence8.png}
+\caption{Integration sequence - 8 - Request Manager \& above}
+\label{fig:int_seq8}
+\end{center}•
+\end{figure}
+And again we terminate this sequence of integration introducing the Clients to test that all of the functionalities of this subsystem work properly.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence9.png}
+\caption{Integration sequence - 9 - Client \& above}
+\label{fig:int_seq9}
+\end{center}•
+\end{figure}
+Thus completing the integration of this subsystem.
+\clearpage
+\paragraph{Payment subsystem}\mbox{}\\
+We now proceed in the integration process Considering the \emph{Payment Subsystem}.
+As before, we start integrating the components related to the access to the database.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.2\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence1.png}
+\caption{Integration sequence - 1 - Data Access Manager, DBMS}
+\label{fig:int_seq1_2}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence2.png}
+\caption{Integration sequence - 2 - Communication Manager \& above}
+\label{fig:int_seq2_2}
+\end{center}•
+\end{figure}
+\pagebreak
+The first components that need to be integrated are the \textbf{Payment Controller} and the \textbf{Payment Gateway}, this to verify that the results relating to payment functions are correctly sent to the external payment companies, and the integration between \textbf{Payment Controller} and \textbf{Communication Manager} to test the communication with the database.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence10.png}
+\caption{Integration sequence - 10 - Payment Controller, Payment Gateway \& above}
+\label{fig:int_seq10}
+\end{center}•
+\end{figure}
+Followed by the integration with the \textbf{Request Manager} to verify the correct forwarding of information requests to the subsystem.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence11.png}
+\caption{Integration sequence - 11 - Request Manager \& above}
+\label{fig:int_seq11}
+\end{center}•
+\end{figure}
+As before we terminate this sequence of integration testing the connection with the Client.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence12.png}
+\caption{Integration sequence - 12 - Client Payment System \& above}
+\label{fig:int_seq12}
+\end{center}•
+\end{figure}
+\clearpage
+\paragraph{Car / Sensors subsystem}\mbox{}\\
+The last subsystem to be included in the sequence of integration is the \emph{Car / Sensors subsystem} that will handle all exchanges of information and operations to be performed on vehicles and everything related to the maintenance.
+The starting point is still represented by the access to database.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.2\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence1.png}
+\caption{Integration sequence - 1 - Data Access Manager, DBMS}
+\label{fig:int_seq1_3}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.3\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence2.png}
+\caption{Integration sequence - 2 - Communication Manager \& above}
+\label{fig:int_seq2_3}
+\end{center}•
+\end{figure}
+As first components to be integrated, we choose \textbf{Cars Controller} and \textbf{Data Collector}: this choice derives from the importance that covers the proper exchange of information between system and machine, upon which are based a considerable number of other functions related to the \textbf{Cars Controller} itself. In addition we integrate our principal component with the \textbf{Maintenance Gateway}  to test the proper sending of information from the system to the maintenance company and with the \textbf{Communication Manager} to verify the correct access with the database.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence13.png}
+\caption{Integration sequence - 13 - Cars Controller, Collector Data, Maintenance Gateway \& above}
+\label{fig:int_seq13}
+\end{center}•
+\end{figure}
+Finally the sequence of integration will end integrating the \textbf{Request Manager} and so to verify the correct implementation of functionalities such as reporting a fault to a machine or access by the maintenance to the list of reported cars.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence14.png}
+\caption{Integration sequence - 14 - Request Manager \& above}
+\label{fig:int_seq14}
+\end{center}•
+\end{figure}
+As last integration, like in other subsystems, we verify and test the integration with the clients.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence15.png}
+\caption{Integration sequence - 15 - Clients \& above}
+\label{fig:int_seq15}
+\end{center}•
+\end{figure}
+\clearpage
+\emph{\underline{Note to the reader}}: In previous integration sequences it was performed a choice concerning the gateway present in the component view of the DD: we decide to show explicitly only the payment and maintenance gateway. This is because the integration of the omitted gateway is to consider joint with the components to which they are directly linked: For example, the \textbf{Sensor Gateway} is considered as a joint to the component \textbf{Data Collector} and the gateway relative to the notifications joint with the \textbf{Notification Helper}.
+\pagebreak
+\subsubsection{Subsystem integration sequence}
 \end{document}
