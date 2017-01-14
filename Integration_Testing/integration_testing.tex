@@ -297,4 +297,84 @@ As last integration, like in other subsystems, we verify and test the integratio
 \emph{\underline{Note to the reader}}: In previous integration sequences it was performed a choice concerning the gateway present in the component view of the DD: we decide to show explicitly only the payment and maintenance gateway. This is because the integration of the omitted gateway is to consider joint with the components to which they are directly linked: For example, the \textbf{Sensor Gateway} is considered as a joint to the component \textbf{Data Collector} and the gateway relative to the notifications joint with the \textbf{Notification Helper}.
 \pagebreak
 \subsubsection{Subsystem integration sequence}
+In order to recreate from the subsystems, considered in the previous section, the overall system, the process of integration will initially proceed by integrating the \textbf{Reservation Subsystem} with \textbf{Car / Sensor Subsystem} in order to test all of those functions of the first subsystem that require access to the functionality provided by the second.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence16.png}
+\caption{Integration sequence - 16 - Clients \& above}
+\label{fig:int_seq16}
+\end{center}•
+\end{figure}
+It is now integrated  the \textbf{Account Subsystem*}in order to test the integration of external user and system, through all the features that will provide PowerEnjoy to it, excluding those relating to payments that are later tested with the integration of the related subsystem.
+\pagebreak;
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence17.png}
+\caption{Integration sequence - 17 - Clients \& above}
+\label{fig:int_seq17}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence18.png}
+\caption{Integration sequence - 18 - Clients \& above}
+\label{fig:int_seq18}
+\end{center}•
+\end{figure}
+\clearpage
+\section{Individual steps and test description}
+\section{Performance analysis}
+The PowerEnJoy service is characterized by a complex structure that contains heterogenous operations: a simple example is the monitoring of all running cars while processing a payment and, meanwhile, evading multiple clients’ requests. This leads to a simulations based study, using specific stress and load tests, regarding the application server, focusing on the response latency, usage of internal resources and effective parallelism of processes. Next step, but not by importance, there should be made some investigations about the latency of DB-related operations focusing over the time that a request spends in I/O operations rather than being processed and completed. These tests are strongly advised even after the effective release of the system because their power is to highlight potential errors and generate a starting point for future improvements. Talking about time latency with respect to the client is not of interest: since the service is accessed via the Internet, the connection speed that the client is using determines the sensation of a quick and responsive service rather than a slow and unsatisfying one. However, our aim is to ensure the maximum usability of our product. Focusing on the mobile platforms, further problems arise: the CPU usage, free memory available; battery usage can be seen as a consequence of the preceding couple. Those aspects are connected together and we can look for a potentially good trade-off: 
+\begin{itemize}
+\item CPU usage must be limited between bounds: an abuse of the CPU will make the usage of a mobile device quicker but at the cost of increasing the usage of the other two parameters taken into account;
+\item usage of available memory should be minimized by project specification (both RASD and DD): since our service is based on the interaction with a service provider, the effective data stored in the device is minimal and limited to unlock codes and few more generic ones.
+\end{itemize}•
+\section{Tools and test equipment required}
+\subsection{Test tools}
+Testing for the PowerEnJoy system-to-be will be splitted in three main parts:
+\begin{itemize}
+\item Business logic components: in order to tackle testing of this section of the system, the two main tools that will be used are Arquillian integration testing framework and the JUnit framework. The first one is specifically designed for checking the execution of a component with respect to the surrounding environment. In this specific system, its functionalities will be used to verify that communication with database and how the communication flow is performed by the system with respect to what was expected. JUnit framework will be used for both the purpose of unit testing in combination with test coverage assist like Sonarqube, and its potentiality will be adapted to integration testing with respect to the correctness of responses that the various component give back when an error and exceptions occur;
+\item Mobile applications: the mobile application must be tested with respect of CPU and memory usage and energy consumption. This could be done by specific tools within the SDK of the platform target of testing;
+\item Validation, certification and standardisation for web pages: W3C is the specific tool for validating the system-to-be web code related to the user experience. Our aim with this kind of testing is to generate a product that will target the most wide pool of potential users and therefore clients.
+\end{itemize}•
+\subsection{Test equipment}
+As far as equipment is concerned, the variety of products used as benchmark will be simulated and will represent a wide selection of:
+\begin{itemize}
+\item Mobile devices: their emulation is available within the SDK used to develop the mobile application;
+\item Personal computers: resource usage is not the main target for this specific pool of products since the effectiveness and responsiveness is mainly due to the effective Internet connection. The equipment is identified in a basic/average resources availability.
+\end{itemize}•
+Focusing on the backend of the service, it is recommended to stipulate a contract with a resource provider: the computational power required by the entirety of the service offered to the client can setted by a pay-for-use contract. In this way the service will be improved incrementally and performances tests can be completed with the possibility of saving a certain amount of money. For the first official release will be used a completely proprietary infrastructure that, in the future can be moved into the cloud. This steps can improve the potential saving of the company because costs are setted as the computational force required is verified.
+\section{Required program driver and test data}
+\subsection{Program driver and stubs}
+As stated before in this document, we are going to follow a bottom-up approach for integration testing. This decision leads to the necessity of creating the needed set of drivers in order to perform the identified tests pools, in particular we will construct drivers for each module, excluding those coming from third parties, as the DBMS and the API provided by the Google services. Hereafter is a list of drivers necessary to test the integration of the system-to-be:
+\begin{itemize}
+\item \textbf{Data Access Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Data Access Manager} in order to test its interaction with the DBMS. We emphasize that the DBMS does not need a direct driver to be tested with, being a product supplied by third parties.
+\item \textbf{Communication Manager Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Communication manager} in order to test the internal communication capabilities. Especially by testing the ability to invoke methods on the \emph{Data Access Manager} and then allow access to the database to system components.
+\item \textbf{Ride Controller Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Ride Controller} and therefore the invocation of all the methods related to the ride operations, and will focus on verifying the interaction with components such as \emph{Communication Manager}, \emph{Notification Helper} and \emph{Google Maps API}.
+\item \textbf{Reservation Controller Driver}: as for the \emph{Ride Controller Driver}, this module will be focused on invoking methods exposed by the \emph{Reservation Controller} and therefore the invocation of all the methods related to the reservation operations. In addition, it will be used to test the correct interaction with components such as \emph{Notification Helper} and \emph{Communication Manager}.
+\item \textbf{Notification Helper Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Notification Helper} in order to test the proper communication between this component and the gateway forwarding notifications to users, \emph{Push Gateway} and \emph{Email Gateway}.
+\item \textbf{Request Manager Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Request Manager} and then verify the correct forwarding of requests coming from the outside to the right components. This module, in detail, check the communication with different components: \emph{Login / Registration Controller}, \emph{Ride Controller}, \emph{Reservation Controller}, \emph{Payment Controller} and finally \emph{Cars Controller}.
+\item \textbf{Login/Registration Controller Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Login/Registration Controller} and then verify the correct operation about login and registration.This module will furthermore verify the interaction with \emph{Notification Helper} for submitting notifications and \emph{Communication Manager} for interacting with other components and database.
+\item \textbf{Payment Controller Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Payment Controller} in order to check the proper functioning the operations relating to the management of payments. This module will verify the correct connection with the \emph{Communication Manager} and the \emph{Payment Gateway} to test the correct routing of payment notifications to external company.
+\item \textbf{Payment Gateway Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Payment Gateway} to test che correct communication with the external company.
+\item \textbf{Cars Controller Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Cars Controller} in order to check the correct functioning of the operations relating to the management of sensors and actuators on the machines, as well as functions relating to maintenance. This module will furthermore test the interaction with differents components such as \emph{Communication Manager}, \emph{Maintenance Gateway} to test the correct forwarding of notifications to the maintenance company, and \emph{Collector Data} to ensure the correct communication with cars.
+\item \textbf{Maintenance Gateway Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Maintenance Gateway} to verify the correct communication with the maintenance company.
+\item \textbf{Collector Data Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Collector Data} to test the proper communication with sensors and actuators on cars.
+\end{itemize}•
+\subsection{Test data}
+\addcontentsline{toc}{section}{Used tools}
+\section*{Used tools}
+\begin{itemize}
+\item Github: for version control
+\item GoogleDoc: to write the document
+\item Draw.io: to create the diagrams
+\item \LaTeX: to create the pdf
+\end{itemize}
+\addcontentsline{toc}{section}{Work hours}
+\section*{Work hours} 
+\begin{itemize}
+\item Emanuele Ricciardelli: $\sim$ 30 hrs.
+\item Giorgio Tavecchia: $\sim$ 30 hrs.
+\item Francesco Vetr\'o: $\sim$ 30 hrs.
+\end{itemize}
 \end{document}
