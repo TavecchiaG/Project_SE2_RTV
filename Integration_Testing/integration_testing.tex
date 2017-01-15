@@ -1,10 +1,13 @@
 \documentclass[10pt, a4paper,titlepage]{article}
 
 \usepackage{graphicx}
+\usepackage{tabularx}
 \usepackage{listings}
 \usepackage[normalem]{ulem}
 \usepackage{caption}
 \usepackage[bottom]{footmisc}
+\usepackage{textcomp}
+
 
 \begin{document}
 \begin{titlepage}
@@ -322,13 +325,681 @@ It is now integrated  the \textbf{Account Subsystem*}in order to test the integr
 \end{center}•
 \end{figure}
 \clearpage
-\section{Individual steps and test description}
-\section{Performance analysis}
-The PowerEnJoy service is characterized by a complex structure that contains heterogenous operations: a simple example is the monitoring of all running cars while processing a payment and, meanwhile, evading multiple clients’ requests. This leads to a simulations based study, using specific stress and load tests, regarding the application server, focusing on the response latency, usage of internal resources and effective parallelism of processes. Next step, but not by importance, there should be made some investigations about the latency of DB-related operations focusing over the time that a request spends in I/O operations rather than being processed and completed. These tests are strongly advised even after the effective release of the system because their power is to highlight potential errors and generate a starting point for future improvements. Talking about time latency with respect to the client is not of interest: since the service is accessed via the Internet, the connection speed that the client is using determines the sensation of a quick and responsive service rather than a slow and unsatisfying one. However, our aim is to ensure the maximum usability of our product. Focusing on the mobile platforms, further problems arise: the CPU usage, free memory available; battery usage can be seen as a consequence of the preceding couple. Those aspects are connected together and we can look for a potentially good trade-off: 
-\begin{itemize}
-\item CPU usage must be limited between bounds: an abuse of the CPU will make the usage of a mobile device quicker but at the cost of increasing the usage of the other two parameters taken into account;
-\item usage of available memory should be minimized by project specification (both RASD and DD): since our service is based on the interaction with a service provider, the effective data stored in the device is minimal and limited to unlock codes and few more generic ones.
-\end{itemize}•
+\section{Individual steps and test description} \label{sec3}
+In this section we would describe, according to the Component Interfaces (see DD at Section 2.6), how the interaction between the various components of your system is tested, using the properly interfaces provided by us in order to get this purpose. The description is made by going through the different subsystems and for each of that, focusing on their working and describing in an accurate way what are the methods used to reach the scope. For each method described, we give a brief description on what are the possible inputs values and the respective effect expectation.
+\subsection{External calling}
+With external calling we mean one of various type of Client that we described in the Component View (Client, Maintenance System or Payment System). Each of that, in the request phase, performs and sends a new request to our system. It is processed by the Request Manager. The request type specified below is generic (abstract superclass) and different types of requests exist (Client has ClientRequest, Maintenance has MaintenanceRequest and so on).
+\subsubsection{Client (generic), Request Manager}
+This test is done to verify that the request manager can receive correctly an admissible request and that it is able to handle this in order to be dispatched to the correct component.
+\begin{table}[h]
+\caption{sendRequest(request:Request)}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+One of the request type cited above & The request is processed by proper policies, depending on the request type and it is ready to be dispatched.\\
+\hline
+\end{tabularx}
+\end{table}
+\subsection{Reservation subsystem}
+\subsubsection{Communication Manager, Data Access Manager} \label{sssec3.2.1}
+This test is made to verify that the Data Access Manager can parse the string received by the Communication Manager as a query and if the component can perform it properly returning the correct instance of Model required by the query submitted.
+\begin{table}[h]
+\caption{sendQuery(query: String):Model}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+A string not parsed in a Query Language & A InvalidArgumentException is thrown.\\
+\hline
+Valid query string & The Data Access Manager performs the query on the Database and returns the proper instance of the Model class (or its subclass) based on what the query asks.\\
+\hline
+\end{tabularx}
+\end{table}
+This test is made to verify that the Data Access Manager can parse the string received by the Communication Manager as an updating query and if the component can perform it properly returning the outcome of the operation.
+\begin{table}[h]
+\caption{sendUpdate(query: String):boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+A string not parsed in a Query Language & A InvalidArgumentException is thrown.\\
+\hline
+A string not parsed in a updating instruction & A InvalidArgumentValueException is thrown\\
+\hline
+Valid query string & The Data Access Manager performs the updating on the Database and returns true if it succeed, otherwise false.\\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
+\subsubsection{Reservation Controller, Communication Manager}
+This test is made to verify that the Communication Manager can perform the Method sent by Reservation Controller in a proper way in order to perform the desired effect on the system.
+\begin{table}[h]
+\caption{executeRemoteMethod(method: Method):boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+A method that is not listed in the class & Return false\\
+\hline
+Valid method & The Communication Manager dispatches the method come from the reservation and performs the proper action, described by the parameter passed. \\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
+\subsubsection{Ride Controller, Communication Manager}
+This test is made to verify that the Communication Manager can perform the Method sent by Ride Controller in a proper way in order to perform the desired effect on the system.
+\begin{table}[h]
+\caption{executeRemoteMethod(method: Method):boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+A method that is not listed in the class & Return false\\
+\hline
+Valid method & The Communication Manager dispatches the method come from the RideController and performs the proper action, described by the parameter passed.  \\
+\hline
+\end{tabularx}
+\end{table}
+\subsubsection{Request Manager, Reservation Controller}
+This test is made to verify that the reservation controller can validate the input received by the request manager and it is able to create a new valid instance of reservation using the user informations passed by the previous component.
+\begin{table}[h]
+\caption{newReservation(user: User, carPlate: String):boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+A not existing user & A InvalidArgumentException is thrown\\
+\hline
+A user suspended from the service & A UserSuspendedException is thrown. \\
+\hline
+A not existing car & A InvalidArgumentException is thrown\\
+\hline
+Valid informations & Reservation Controller, first retrieves the car’s data according to the carPlate passed, then creates a new instance of reservation and fills it with the information received as parameters. A new instance is saved in a permanent way to the database.\\
+\hline
+\end{tabularx}
+\end{table}
+\clearpage
+This test is made to verify that the Reservation Controller can retrieve the last reservation performed by a specific user and show it to the client.
+\begin{table}[h]
+\caption{showLastReservation(user: User): void}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+A not existing user & A InvalidArgumentException is thrown\\
+\hline
+A user that hasn’t performed a reservation yet & A InvalidArgumentValueException is thrown. \\
+\hline
+Valid informations & Reservation Controller creates a properly method instance to do the query on the database for retrieving the user’s last reservation. At the end, it shows the informations. \\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the reservation controller can extend correctly its duration.
+\begin{table}[h]
+\caption{extendReservation(reservationId: Int, user: User, carPlate: String): boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+Valid informations & Reservation Controller, first retrieves the reservation instance related to the input’s parameter, then modifies the information concerning the ending time extending its duration and it updates the record on the database, through  a proper Method instance.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the reservation controller can delete the reservation passed.
+This test is made to verify that the reservation controller can extend correctly its duration.
+\begin{table}[h]
+\caption{deleteReservation(reservationId: Int, user: User, carPlate: String): boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+Valid informations & Reservation Controller deletes the record that corresponds to the input’s parameter on the database , through a proper Method instance.\\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
+\linebreak
+This test is made to verify that the reservation controller can perform the code generator  algorithm to provide the QR Code for unlocking the car reserved.
+\begin{table}[h]
+\caption{showUnlockCode(reservationId: Int, user: User, carPlate: String): Code}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+Valid informations & Reservation Controller, first retrieves the reservation instance related to the input’s parameter, then performs the unlocking code by the algorithm devoted to it and explained in Design Document (ER Diagram section) and returns it.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the reservation controller can perform the distance algorithm in order to providing a suitable list of reservable cars.
+\begin{table}[h]
+\caption{retrieveCarsPosition(position: Position, range: Int) : List<Car>}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+An invalid position & A InvalidArgumentException is thrown\\
+\hline
+A nonpositive range & A InvalidArgumentValueException is thrown\\
+\hline
+Valid informations & Reservation Controller retrieves the list of available cars from the database and performs a specific algorithm to filter them according to their last position. At the end, it returns the filtered list\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+\subsubsection{Notification Helper, Push Gateway} \label{sssec3.2.5}
+This test is made to verify that the Push Gateway notifies correctly the client’s device using push notification.
+\begin{table}[h]
+\caption{sendMessage(message: Message) : boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+An empty message & A InvalidArgumentValueException is thrown\\
+\hline
+Valid parameter & Push Gateway notifies the Client device through push notification reporting the string message contained in the Message passed.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+\subsubsection{Notification Helper, Email Gateway} \label{sssec3.2.6}
+This test is made to verify that the Email Gateway notifies correctly the client’s device using email notification.
+\begin{table}[h]
+\caption{sendMessage(message: Message) : boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+An empty message & A InvalidArgumentValueException is thrown\\
+\hline
+Valid parameter & Email Gateway notifies the Client application through email notification reporting the string message contained in the Message passed.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+\subsubsection{Reservation Controller, Notification Helper}
+This test is made to verify that the Notification Helper is able to handles correctly the information passed by Reservation Controller and can create and send a proper message to the right gateway.
+\begin{table}[h]
+\caption{sendNotification(notification: Notification): void}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+Valid parameter & Notification Helper handles the notification containing the information to be sent to the client, creates a proper message and send it through the right gateway.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+\subsubsection{Ride Controller, Notification Helper}
+This test is made to verify that the Notification Helper is able to handles correctly the information passed by Ride Controller and can create and send a proper message to the right gateway.
+\begin{table}[h]
+\caption{sendNotification(notification: Notification): void}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+Valid parameter & Notification Helper handles the notification containing the information to be sent to the client, creates a proper message and send it through the right gateway.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+\subsection{Account Subsystem}
+\subsubsection{Communication Controller, Data Access Manager}
+See section \ref{sssec3.2.1}.
+\subsubsection{Login/Registration Controller, Communication Manager}
+This test is made to verify that the Communication Manager can perform the Method sent by Login/Registration Controller in a proper way in order to perform the desired effect on the system.
+\begin{table}[h]
+\caption{executeRemoteMethod(method: Method)}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+A method that is not listed in the class & Return false\\
+\hline
+Valid method & The Communication Manager dispatches the method come from the Login/Registration Controller and performs the proper action, described by the parameter passed.\\
+\hline
+\end{tabularx}
+\end{table}
+\subsubsection{Notification Helper, Push Gateway}
+See section \ref{sssec3.2.5}
+\subsubsection{Notification Helper, Email Gateway}
+See section \ref{sssec3.2.6}
+\subsubsection{Login/Registration Controller, Notification Helper}
+This test is made to verify that the Notification Helper is able to handles correctly the information passed by Login/Registration Controller and can create and send a proper message to the right gateway.
+\begin{table}[h]
+\caption{sendNotification(notification: Notification): void}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+Valid parameter & Notification Helper handles the notification containing the information to be sent to the client, creates a proper message and send it through the right gateway.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+\subsubsection{Request Manager, Login/Registration Controller}
+This test is made to verify that the Login/Registration Controller is able to create a new stable session with the user’s data retrieved by the database in order to allow him for performing actions.
+\begin{table}[h]
+\caption{login(password:String): User}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\ 
+\hline
+A not existing password in the database & Return false\\
+\hline
+Valid password & The Login/Registration Controller retrieves all data referred by the password inserted in order to execute efficiently the next operations, so it creates a new session with the data for keeping track on the system about the user connection. The User instance is returned to the caller in order to give the possibility to save it into a suitable collection and to associate it to the respective session ID.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the Login/Registration Controller is able to delete the Session of the logging out user.
+\begin{table}[h]
+\caption{logout(sessionId: int): boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+Valid parameter & The Login/Registration Controller deletes the session related to the user that has requested to be logged out. It returns false if problems occur.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the Login/Registration Controller is able to create a new User.
+\begin{table}[h]
+\caption{registration(name: String, surname: String, drivingLicense: String, email:String,paymentMethod:String): String}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A driving license that already exists & Return false\\
+\hline
+Valid credentials & The Login/Registration Controller creates a new instance of User and inserts it into the database, then it sends the password to the user through an email (using the Notification Helper).\\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
+\linebreak
+\subsection{Payment subsystem}
+\subsubsection{Communication Controller, Data Access Manager}
+See section \ref{sssec3.2.1}
+\subsubsection{Payment Controller, Communication Manager}
+This test is made to verify that the Communication Manager can perform the Method sent by Payment Controller in a proper way in order to perform the desired effect on the system.
+\begin{table}[h]
+\caption{executeRemoteMethod(method: Method)}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A method that is not listed in the class & Return false\\
+\hline
+Valid method & The Communication Manager dispatches the method come from the Payment Controller and performs the proper action, described by the parameter passed.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+\clearpage
+\subsubsection{Request Manager, Payment Controller}
+This test is made to verify that the Payment Controller is able to retrieves correctly the user and his list of pending payments.
+\begin{table}[h]
+\caption{showPendingPayments(userPaymentID: int) : List<Payment>}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A wrong userPaymentID & A InvalidArgumentValueException is thrown\\
+\hline
+Valid ID & The Payment Controller performs the specific algorithm for converting the ID passed by the Payment society’s system in order to retrieve the related User and then it checks if he has pending payments on the database. If he hasn’t, it returns null, otherwise it returns the pending payments as a list.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the Payment Controller is able to update a payment record on the database.
+\begin{table}[h]
+\caption{updatePayment(payment: Payment): boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A not existing payment in the database & A InvalidArgumentValueException is thrown\\
+\hline
+Valid payment & The Payment Controller updates the related payment record in the database.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+\subsubsection{Payment Controller, Payment Gateway}
+This test is made to verify that the Payment Controller is able to send correctly the message to the payment company.
+\begin{table}[h]
+\caption{sendMessage(message: Message) : boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+Valid payment & The Payment Gateway sends the message, properly prepared by the Payment Controller, to the payment company. It returns false if an issue occurs, otherwise true.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+\subsection{Car subsystem}
+\subsubsection{Communication Controller, Data Access Manager}
+See section \ref{sssec3.2.1}
+\subsubsection{Cars Controller, Communication Manager}
+This test is made to verify that the Communication Manager can perform the Method sent by Cars Controller in a proper way in order to perform the desired effect on the system.
+\begin{table}[h]
+\caption{executeRemoteMethod(method: Method)}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A method that is not listed in the class & Return false\\
+\hline
+Valid method & The Communication Manager dispatches the method come from the Cars Controller and performs the proper action, described by the parameter passed. \\
+\hline
+\end{tabularx}
+\end{table}
+\subsubsection{Collector Data, Car Gateway}
+This test is made to verify that the Car Gateway can catch the message arrived by external systems and can decide to which component delivers it.
+\begin{table}[h]
+\caption{receiveAndDispatchMessage():Message}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+Nothing & The Car Gateway taps the message from the external system and it dispatches it to the proper component (in this case, the Collector Data) by a return.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the Car Gateway can send correctly the message passed by the Collector Data.
+\begin{table}[h]
+\caption{sendMessage(message:Message):boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+Valid message & The Car Gateway sends the message to the right external addressee. It returns false if an issue occurs, otherwise true.\\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
+\subsubsection{Cars Controller, Collector Data}
+This test is made to verify that the Collector Data is able to elaborate the message arrived by external systems in order to extracts useful data.
+\begin{table}[h]
+\caption{retrieveData(message: Message): Collection $\langle Data \rangle$}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+Valid message & The Collector Data elaborates the message and extracts the data contained into it. It puts what extracted into a Collection and it sends it to the Cars Controller.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the Collector Data is able to create a proper message for the car’s external systems using a list of data passed.
+\begin{table}[h]
+\caption{createMessage(car: Car, data: List $\langle Data \rangle$) : void}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A not existing car & An InvalidArgumentException is thrown\\
+\hline
+Valid parameters & The Collector Data creates a suitable message using the list of data passed by Cars Controller, then the message is sent to the car’s external system indicated by the Car instance.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the Cars Controller is able to check if the code caught by the car’s sensors is equal to that has been associated in the registration phase for that specific car and id it can unlock correctly the car.
+\begin{table}[h]
+\caption{checkUnlockCode(code: Code): boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+Valid parameters & The Cars Controller checks if the QR Code read by the car’s system corresponds to the code associated to that specific car in a valid registration phase, by reading on the database. If the correspondence occurs, it return true and the car will be unlocked, otherwise false.\\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
+\subsubsection{Cars Controller, Maintenance Gateway}
+This test is made to verify that the Maintenance Gateway can send correctly the message passed by the Cars Controller.
+\begin{table}[h]
+\caption{sendMessage(message:Message):boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+Valid message & The Maintenance Gateway sends the message to the right external addressee. It returns false if an issue occurs, otherwise true.\\
+\hline
+\end{tabularx}
+\end{table}
+\subsubsection{Request Manager, Cars Controller}
+This test is made to verify that the Cars Controller can retrieve correctly the list of maintenance records store on the database.
+\begin{table}[h]
+\caption{getReportedCars(): List$\langle MaintenanceRecord \rangle$}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+Nothing & The Cars Controller retrieves all the maintenance record related to cars which are waiting assistance. It puts them into a list and it returns that.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the Cars Controller can updates a maintenance record stored on the database with data passed by the Maintenance society’s external system.
+\begin{table}[h]
+\caption{updateMaintenanceRecord(mr: MaintenanceRecord):boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A not existing record in the database & An InvalidArgumentException is thrown\\
+\hline
+Valid record & The Cars Controller updates the maintenance record on the database. If an issue occurs, it returns false, otherwise true.\\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
+\linebreak
+This test is made to verify that the Cars Controller can open and save correctly a new report performed by the maintenance employee.
+\begin{table}[h]
+\caption{openReportIssue(carPlate: String , description: String): boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A car's plate referred to a not existing car & An InvalidArgumentValueException is thrown\\
+\hline
+Valid parameter & The Cars Controller, first retrieves the car’s information from the database, then creates a new instance of MaintenanceRecord based on the parameters and inserts it into the database. If an issue occurs, it returns false, otherwise true.\\
+\hline
+\end{tabularx}
+\end{table}
+\subsection{Subsystem interconnection and communication}
+This last section is devoted to show the testing of the interconnection and the communications among the subsystems listed above in order to pursuit the system’s scope and to perform its functionalities.
+\subsubsection{Ride Controller, Communication Manager, Cars Controller (Cars subsystem, Reservation subsystem)}
+This test is made to verify that the Reservation Controller can terminate correctly a reservation when a ride related to it is started.
+\begin{table}[h]
+\caption{completeReservation(reservation: Reservation): boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A not existing reservation & An InvalidArgumentValueException is thrown\\
+\hline
+Valid parameter & The Reservation Controller updates on the database the record referred to the reservation passed as parameter in order to mark it completion, so updating the endingTime attribute. If an issue occurs return false, otherwise true.\\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
+\subsubsection{Ride Controller, Communication Manager, Cars Controller (Cars Subsystem, Reservation Subsystem)}
+This test is made to verify that the Cars Controller can check if the car referred to the Car instance passed by the Ride Controller is plugged or not.
+\begin{table}[h]
+\caption{isPlugged(car: Car): boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A not existing car & An InvalidArgumentValueException is thrown\\
+\hline
+Valid parameter & The Cars Controller’s subsystem checks if the car reported by the Car instance is plugged through its sensors. It returns true if it’s plugged, otherwise false.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the Cars Controller can check the battery charge level of a given car.
+\begin{table}[h]
+\caption{getCharge(car: Car): Int}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A not existing car & An InvalidArgumentValueException is thrown\\
+\hline
+Valid parameter & The Cars Controller’s subsystem queries the car’s sensors indicated by the Car instance  to get the level of battery charge. It returns the value.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the Cars Controller can correctly retrieve the position of a given car.
+\begin{table}[h]
+\caption{getPosition(car: Car): Area}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A not existing car & An InvalidArgumentValueException is thrown\\
+\hline
+Valid parameter & The Cars Controller’s subsystem checks if the car’s engine is off, then it queries the database retrieving the informations about where the car is left when the ride before is finished, otherwise it retrieves the car’s position using the GPS system located on the vehicle. It returns the Area’s information based on the fact explained above.\\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
+\linebreak
+This test is made to verify that the Ride Controller can create a new Ride when a Cars Controller observes that the engine of a reserved car is turned on.
+\begin{table}[h]
+\caption{newRide(reservation: Reservation): boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A not existing reservation & An InvalidArgumentValueException is thrown\\
+\hline
+Valid parameter & The Ride Controller creates a new instance of Ride and fills it with the informations concerning the associated reservation, then it inserts it into the database.
+If an issue occurs, it returns false, otherwise true.\\
+\hline
+\end{tabularx}
+\end{table}
+\linebreak
+This test is made to verify that the Ride Controller can correctly mark as finished a specific ride.
+\begin{table}[h]
+\caption{completeRide(ride: Ride): boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A not existing ride & An InvalidArgumentValueException is thrown\\
+\hline
+Valid parameter & The Ride Controller updates specific attributes (for example, ride’s ending Time, in which safe area it is parked and so on) of the record situated on the database and related to the parameter passed in order to mark the ending of that existing ride. Since that moment, that specific car is unreserved and it is ready to be reserved again. If an error occurs, it returns false, otherwise true.\\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
+\subsubsection{Ride Controller, Communication Manager, Payment Controller (Payment Subsystem, Reservation Subsystem)}
+This test is made to verify that the Payment Controller is able to notify correctly the Payment Society about a new pending payment concerning a finished ride.
+\begin{table}[h]
+\caption{sendPayment(payment: Payment):boolean}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Input & Effect on the system\\
+\hline
+A null parameter & A NullPointerException is thrown\\
+\hline
+A payment referred to a not existing ride or not existing user & An InvalidArgumentValueException is thrown\\
+\hline
+Valid parameter & The Payment Controller’s subsystem sends the payment request to the Payment society’s external system in order to notify them about a new payment to enforce. If an error occurs, it returns false, otherwise true.\\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
 \section{Tools and test equipment required}
 \subsection{Test tools}
 Testing for the PowerEnJoy system-to-be will be splitted in three main parts:
@@ -338,12 +1009,9 @@ Testing for the PowerEnJoy system-to-be will be splitted in three main parts:
 \item Validation, certification and standardisation for web pages: W3C is the specific tool for validating the system-to-be web code related to the user experience. Our aim with this kind of testing is to generate a product that will target the most wide pool of potential users and therefore clients.
 \end{itemize}•
 \subsection{Test equipment}
-As far as equipment is concerned, the variety of products used as benchmark will be simulated and will represent a wide selection of:
-\begin{itemize}
-\item Mobile devices: their emulation is available within the SDK used to develop the mobile application;
-\item Personal computers: resource usage is not the main target for this specific pool of products since the effectiveness and responsiveness is mainly due to the effective Internet connection. The equipment is identified in a basic/average resources availability.
-\end{itemize}•
-Focusing on the backend of the service, it is recommended to stipulate a contract with a resource provider: the computational power required by the entirety of the service offered to the client can setted by a pay-for-use contract. In this way the service will be improved incrementally and performances tests can be completed with the possibility of saving a certain amount of money. For the first official release will be used a completely proprietary infrastructure that, in the future can be moved into the cloud. This steps can improve the potential saving of the company because costs are setted as the computational force required is verified.
+In order to perform the entire test process proposed in the previous sections, we have chosen to stipulate a contract with a Cloud provider for hiring computational environment. 
+Then we could use a cloud service like Platform as a Service (PaaS) in order to perform our test plan, including the integration test.
+This choice has been done because the cloud computing is a very cheap way to get computational power and also because our future intention (explained on the Design Document - Overview), after the first official release, is to move the system onto a cloud infrastructure, therefore the PaaS allows us to feel and to measure what will be the performances of our system running on this type of infrastructure, before the deployment; in addition, performing the test on an architecture of this kind allows us to make scalable tests, in order to undergo the system with incremental workloads. Once obtained the computational infrastructure, we will use those devices which will be implied by users to interact with our system: we’re referring to mobile phone devices (with various O.S. installed like iOS, Android, Windows Phone and so on) and Personal Computers in order to test the interaction between different types of clients and our system and also for testing how the system’s responses are elaborated by those clients and how they are visualized. This kind of tests can be completed by using at full extent the tools that some development kits offer: the idea is to simulate different scenarios via this tools in order to check whether the performances, both visually and system-related, are matched and the correctness of the service erogated. 
 \section{Required program driver and test data}
 \subsection{Program driver and stubs}
 As stated before in this document, we are going to follow a bottom-up approach for integration testing. This decision leads to the necessity of creating the needed set of drivers in order to perform the identified tests pools, in particular we will construct drivers for each module, excluding those coming from third parties, as the DBMS and the API provided by the Google services. Hereafter is a list of drivers necessary to test the integration of the system-to-be:
@@ -362,6 +1030,78 @@ As stated before in this document, we are going to follow a bottom-up approach f
 \item \textbf{Collector Data Driver}: the development of this test module will be focused on invoking methods exposed by the \emph{Collector Data} to test the proper communication with sensors and actuators on cars.
 \end{itemize}•
 \subsection{Test data}
+As expressed in section \ref{sec3} (Individual Steps and Test Description) in order to perform the set of tests listed, you must define a data set to cover all variants.
+In particular we will need:
+\begin{itemize}
+\item A set of possible \emph{Request} to test the Request Manager component, providing different features:
+\subitem - a null object;
+\subitem - more than one correct instance of Request in order to cover all the possible request from the clients.
+\item A set of possible query to test the Data Access Manager component, providing different features:
+\subitem - a null parameter;
+\subitem - a string not correctly parsed in a Query Language;
+\subitem - more than one correct query to cover different type of access to the database.
+\item A set of possible \emph{Method} to test the Communication Manager component, providing different features:
+\subitem - a null object;
+\subitem - a Method undefined;
+\subitem - more than one correct instance of Method to cover different types of communication.
+\item a set of possible \emph{User} to test the Reservation Controller component, providing different features:
+\subitem - a null object;
+\subitem - a not registered user;
+\subitem - more than one valid user with different features like having or not a reservation, being in a ride, being active or suspended from the service.
+\item a set of possible password to test the Login/Registration Controller component, providing different features:
+\subitem - a null parameter;
+\subitem - a not defined password in the database;
+\subitem - a valid password.
+\item a set of possible driving license to test the Login/Registration Controller component, providing different features:
+\subitem - a driving license already registered in the database;
+\subitem - a driving license new to the database.
+\item a set of possible car plate to test the Reservation Controller and Car Controller components, providing different features:
+\subitem - a null parameter;
+\subitem - a car plate not listed in the database;
+\subitem - a correct car plate.
+\item a set of possible ReservationID to test the Reservation Controller component, providing different features:
+\subitem - a null parameter;
+\subitem - a not existing id;
+\subitem - a valid id.
+\item a set of possible Reservation to test the Ride Controller component, providing different features:
+\subitem - a null parameter;
+\subitem - a not existing Reservation in the database;
+\subitem - more than one valid Reservation to test the correct management of them.
+\item a set of possible Ride to test the Ride Controller component, providing different features:
+\subitem - a null parameter;
+\subitem - a not registered Ride in the database;
+\subitem - a set of valid Ride covering all possible cases such as as being completed, in progress or being just started.
+\item a set of possible position to test the Reservation Controller component, providing different features:
+\subitem - a null parameter;
+\subitem - an invalid position;
+\subitem - a set of valid positions related to safe and unsafe area.
+\item a set of possible Message to test the Push, Email, Car, Payment and Maintenance gateway components, providing different features:
+\subitem - a null parameter;
+\subitem - an empty Message;
+\subitem - a set of proper defined Messages to be sent via email;
+\subitem - a set of proper defined Messages to be sent via push notification;
+\subitem - a set of proper defined Messages to the cars of the company;
+\subitem - a set of proper defined Messages to be sent to the maintenance system;
+\subitem - a set of proper defined Messages to be sent to the payment system.
+\item a set of possible Notification to test the Notification Helper component, providing different features:
+\subitem - a null parameter;
+\subitem - a set of valid Notifications.
+\item a set of possible Payment to test the  component, providing different features:
+\subitem - a null parameter;
+\subitem - a not defined payment;
+\subitem - more than one valid payment to cover different possibilities such a payment completed, a pendant one and a payment not well-defined (for example not linked with an existing Ride).
+\item a set of possible Car to test the Collector Data and Cars Controller components, providing different features:
+\subitem - a null parameter;
+\subitem - a not registered car;
+\subitem - a valid car.
+\item a set of possible unlock Code to test the Car Controller component, providing different features:
+\subitem - a null parameter;
+\subitem - a set of valid code in order to verify the proper checking of the code linked to a car reservation.
+\item a set of possible Maintenance Record to test the Cars Controller component, providing different features:
+\subitem - a null parameter;
+\subitem - a not registered Maintenance Record;
+\subitem - a set of valid records in order to test operations such as the update and the closure by the maintenance.
+\end{itemize}•
 \addcontentsline{toc}{section}{Used tools}
 \section*{Used tools}
 \begin{itemize}
