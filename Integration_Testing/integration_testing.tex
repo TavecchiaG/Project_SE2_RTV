@@ -8,7 +8,6 @@
 \usepackage[bottom]{footmisc}
 \usepackage{textcomp}
 
-
 \begin{document}
 \begin{titlepage}
 \title{Integration Testing Document \\Version 1.0}
@@ -123,6 +122,7 @@ Since many features covered by this system need an interaction with the database
 \label{fig:int_seq1}
 \end{center}•
 \end{figure}
+\linebreak
 As will later be made clear, this first integration will also be required for other subsystems, but will not be repeated if it is unnecessary; otherwise it will be repeated the possible variants of integration between these first components and the surrounding ones.
 With respect to the bottom-up approach, the next integration step will cover the correct communication between the database and the \textbf{Communication Manager}.
 \begin{figure}[h]
@@ -132,6 +132,7 @@ With respect to the bottom-up approach, the next integration step will cover the
 \label{fig:int_seq2}
 \end{center}•
 \end{figure}
+\linebreak
 We can now proceed to a higher level of integration considering the \textbf{Ride Controller}:
 this component will be integrated with the API provided by the services of google in order to verify the correct use within their own methods, with the "Notification Helper" in order to verify the correct sending of notifications generated to users, and finally with \textbf{Communication Manager} which, as described in the DD, is designed to allow (in a flexible and transparent way) the exchange of information between internal components of the system, to verify proper access to the database.
 \begin{figure}[h]
@@ -186,6 +187,7 @@ The starting point relative to the sequence of integration of this subsystem sho
 \end{center}•
 \end{figure}
 \pagebreak
+\linebreak
 We follow now with the integration between the \textbf{Login / Registration Controller} and \textbf{Notification Helper} to verify, as done in the previous subsystem, the correct forwarding of notifications generated and, at the same time, integrating  the \textbf{Login / Registration Controller} with \textbf{Communication Manager} and \textbf{Data Access Manager} in order to test the proper functioning of methods that require database access.
 \begin{figure}[h]
 \begin{center}
@@ -194,6 +196,7 @@ We follow now with the integration between the \textbf{Login / Registration Cont
 \label{fig:int_seq7}
 \end{center}•
 \end{figure}
+\linebreak
 Going up to a higher level of integration, we introduce the \textbf{Request Manager} in order to test the correct routing of requests coming from the outside to the component suited to the management of the system accounts.
 \begin{figure}[h]
 \begin{center}
@@ -238,6 +241,7 @@ The first components that need to be integrated are the \textbf{Payment Controll
 \label{fig:int_seq10}
 \end{center}•
 \end{figure}
+\linebreak
 Followed by the integration with the \textbf{Request Manager} to verify the correct forwarding of information requests to the subsystem.
 \begin{figure}[h]
 \begin{center}
@@ -272,6 +276,7 @@ The starting point is still represented by the access to database.
 \label{fig:int_seq2_3}
 \end{center}•
 \end{figure}
+\clearpage
 As first components to be integrated, we choose \textbf{Cars Controller} and \textbf{Data Collector}: this choice derives from the importance that covers the proper exchange of information between system and machine, upon which are based a considerable number of other functions related to the \textbf{Cars Controller} itself. In addition we integrate our principal component with the \textbf{Maintenance Gateway}  to test the proper sending of information from the system to the maintenance company and with the \textbf{Communication Manager} to verify the correct access with the database.
 \begin{figure}[h]
 \begin{center}
@@ -280,6 +285,7 @@ As first components to be integrated, we choose \textbf{Cars Controller} and \te
 \label{fig:int_seq13}
 \end{center}•
 \end{figure}
+\linebreak
 Finally the sequence of integration will end integrating the \textbf{Request Manager} and so to verify the correct implementation of functionalities such as reporting a fault to a machine or access by the maintenance to the list of reported cars.
 \begin{figure}[h]
 \begin{center}
@@ -308,8 +314,8 @@ In order to recreate from the subsystems, considered in the previous section, th
 \label{fig:int_seq16}
 \end{center}•
 \end{figure}
-It is now integrated  the \textbf{Account Subsystem*}in order to test the integration of external user and system, through all the features that will provide PowerEnjoy to it, excluding those relating to payments that are later tested with the integration of the related subsystem.
-\pagebreak;
+\linebreak
+It is now integrated  the \textbf{Account Subsystem}in order to test the integration of external user and system, through all the features that will provide PowerEnjoy to it, excluding those relating to payments that are later tested with the integration of the related subsystem.
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Integration_Testing/TEST_images/Integration_Sequence17.png}
