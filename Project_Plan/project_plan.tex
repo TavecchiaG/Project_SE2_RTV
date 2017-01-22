@@ -50,6 +50,7 @@ This document will be structured in 3 macro parts:
 \item ITPD Version 1.0
 \item Project planning example document.pdf
 \item Function Point Languages Table: \emph{http://www.qsm.com/resources/function-point-languages-table}
+\item CII\_modelman2000.0.pdf
 \end{itemize}
 \section{Project size, cose and effort estimation}
 This section will focus on providing an estimate of the size of the system that will be, as well as costs and development efforts.
@@ -655,30 +656,193 @@ It’s important to underline that the result of this schedule should not be con
 \item Deployment: Deliver and deployment of the software to the customers.
 \end{enumerate}
 To compute the following schedule, we used all data retrieved from the analysis in this document and the duration of the drafting of the previous documents; in particular, we assumed that the team will work 8 hours per day (so the deadlines of the real project do not coincide with the one related to the course) excluding 2 days a week.
+\pagebreak
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/documentRA.png}
-\label{fig:SCED}
+\includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/documentRA.png}
+\label{fig:RASD}
 \end{center}•
 \end{figure}
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/document.png}
-\label{fig:SCED}
+\includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/document.png}
+\label{fig:DD}
 \end{center}•
 \end{figure}
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/documentPPDITPD.png}
-\label{fig:SCED}
+\includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/documentPPDITPD.png}
+\label{fig:PPDITPD}
 \end{center}•
 \end{figure}
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/documentDevelopment.png}
-\label{fig:SCED}
+\includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/documentDevelopment.png}
+\label{fig:DEV}
 \end{center}•
 \end{figure}
+\clearpage
+\section{Resource allocation}
+In this paragraph we present the different steps that leads to the completion of all documents.
+\begin{table}[h]
+\caption{Resource allocation}
+\begin{tabularx}{\textwidth}{|>{\hsize=.25\hsize}X|>{\hsize=.75\hsize}X|}
+\hline
+Document & Step\\
+\hline
+ & 1 - Meeting with stakeholders\\
+\hline
+RASD & 2 -Discussion defining requirements\\
+\hline
+ & 3 - Discussion defining Goals and Text assumptions\\
+\hline
+ & 4 - Constraints Definitions\\
+\hline
+ & 5 - Functional Requirements\\
+\hline
+ & 6 - Non Functional Requirements\\
+\hline
+ & 7 - Meetings with stakeholders in order to check the requirements\\
+\hline
+ & 8 - Scenarios\\
+\hline
+ & 9 - Brief revision to check what has been done\\
+\hline
+ & 10 - Use Case and Class Diagram\\
+\hline
+ & 11 - Sequence, Activity and State Diagram \\
+\hline
+ & 12 - Brief revision to check what has been done\\
+\hline
+ & 13 - Alloy Modeling\\
+\hline
+ & 14 - Copy Word File into a \LaTeX Document\\
+\hline
+ & 15 - Last revision on RASD\\
+\hline
+DD & 16 - Discussion defining Components and High-Level Components\\
+\hline
+& 17 - High-Level Components Diagram\\
+\hline
+& 18 - Component View Diagram\\
+\hline
+& 19 - Discussion defining Database entities and database components\\
+\hline
+& 20 - E-R Diagram\\
+\hline
+& 21 - Deployment View Diagram and Style Architecture Patterns\\
+\hline
+& 22 - Runtime Diagram\\
+\hline
+& 23 - Component Interfaces\\
+\hline
+& 24 - Brief revision to check what has been done\\
+\hline
+& 25 - Discussion concerning algorithm\\
+\hline
+& 26 - Algorithms Design\\
+\hline
+& 27 - Mockups \\
+\hline
+& 28 - Meetings with people in order to valuate the goodness of User Interface's Mockups\\
+\hline
+& 29 - UX Diagrams\\
+\hline
+& 30 - APIs and Requirements Traceability\\
+\hline
+& 31 - Copy Word File into a \LaTeX Document\\
+\hline
+& 32 - Last revision on DD\\
+\hline
+PPD & 33 - Discussion on dispatching components into ILF, ELF, EI, EO, EQ\\
+\hline
+& 34 - ILF and ELF FPs evaluation and description \\
+\hline
+& 35 - EI, EO and EQ FPs evaluation and description\\
+\hline
+& 36 - Brief revision to check what has been done\\
+\hline
+& 37 - COCOMO II cost and effort estimation\\
+\hline
+& 38 - Brief revision to check what has been done\\
+\hline
+& 39 - Scheduling Plan\\
+\hline
+& 40 - Resource Plan\\
+\hline
+& 41 - Discussion on identifying what type of risks could affect the system\\
+\hline
+& 42 - Risk Management\\
+\hline
+& 43 - Copy Word File into a \LaTeX Document\\
+\hline
+& 44 - Last revision on PPD\\
+\hline
+\end{tabularx}
+\end{table}
+\begin{table}[h]
+\begin{tabularx}{\textwidth}{|>{\hsize=.25\hsize}X|>{\hsize=.75\hsize}X|}
+ITPD & 45 - Discussion on what kind of integration strategy adopt\\
+\hline
+& 46 - Discussion on Identifying individual steps of component integration\\
+\hline
+& 47 - Integration Strategy\\
+\hline
+& 48 - Individual Steps and Test Description\\
+\hline
+& 49 - Brief revision to check what has been done\\
+\hline
+& 50 - Discussion on drivers\\
+\hline
+& 51 - Tools and Test Equipment\\
+\hline
+& 52 - Driver description\\
+\hline
+& 53 - Copy Word File into a \LaTeX Document\\
+\hline
+& 54 - Last revision on ITPD\\
+\hline
+\end{tabularx}
+\end{table}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.7\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/staff_powerenjoy.png}
+\label{fig:RES}
+\end{center}•
+\end{figure}
+\clearpage
+\section{Risk management}
+This chapter will face the risk management related to the development of the PowerEnJoy system, in particular, we will try to identify the main risks that the development could come up against and, for each of them, we’ll define some behaviours to apply before, to prevent the concrete risk, or after the actual hit to face it the best way.
+The first possible risk in which development might bump, is constituted by a change of the requirements and features to be implemented in the system, in progress of development. The first solution to solve this possibility is given by the construction of an architecture elastic, able to grant a large margin of changes and improvement (also in view of future updates); However, this should not be seen as the only solution to be taken as a continuous or sudden change in requirements can lead to problems of misunderstanding between teams and stakeholders, as well as within the team itself.
+For this reason, it is very important to prevent these possibilities maintaining a constant dialogue with stakeholders. Allowing them to verify the state of development of each functionality, thus also providing practical examples of immediate understanding in order to obtain the maximum possible agreement, in the event that changes were required, these may be implemented in the course of work.
+Another aspect related to the concept of collaboration and dialogue between stakeholders and team leads us to consider the problem of the response to the final user.
+In particular, we must take into account that nowadays the car sharing services are widespread, and that users prefer a service rather than another both for economic reasons and for simplicity in using the service’s user interface. In our case, this results in the development of a user friendly interface for the application, in order to make the best choices and user preferable, it is therefore advisable to carry out meetings with future users, randomly selected, and carefully study their feedback, focusing these meetings especially just before the release, with briefings or small interview asking what kind of environment the user is looking for.
+Earlier we mentioned the team and how certain factors can influence the development negatively.
+One of the problems that may be encountered is the lack of understanding. This may be due to multiple reasons, primarily due to the lack, or rare, presence of internal meetings: these in fact not only guarantee to maintain an updated flow of informations about the state of development through the developing teams, but also to promote constant motivation and teamwork.
+The misunderstanding may result from other factors, such as incohesive team, where the communication among its members is not proper, so a situation in which each member doesn’t know how is the working progress, is very common.
+The overlapping of responsibilities among multiple team members must also be seen as a remedy in case of absence (illness or other reasons) of one of the members, so as not to slow down or stop the development.
+Continuing on the team's considerations, we can say that the development environment consists of mature programs, which therefore should not show any problems or obstacles to development. Same thing can be done with regard to google APIs used, which at most may go and introduce / remove the feature; for this reason you need to stay informed about updates and then be able to implement them as soon as possible, both during and after the development.
+Although our team is equipped with the necessary knowledge for the development of this type of system, in order to avoid possible stalls or delays in the development of the more complex features of the system, it has been carried out a careful analysis at the beginning of the process, so as to ensure the recruitment of specialized staff (for limited periods) to remedy at these eventualities.
+With regard to the maintenance company and the payment system, that are the outside companies with which they were made contracts for the management of particular fields, we must assume that these contracts may expire, and then the same external companies may change. It is therefore necessary that our system is able to quickly interface with the new services, in order to minimize possible disruption of service, and for this reason it is necessary to focus on the development of components as more flexible.
+Another risk in which the development and especially the release system may encounter is constituted by the hardware necessary. In order to avoid reliability problems (due to the nature of the service) and therefore the  increase in the price of the hardware needed to guarantee it, it is suggested to implement a cloud architecture, maintaining lower costs and ensuring a constant and efficient service.
+All these risks could slow the achievement of one or more deadlines in the schedule, for this reason it is necessary to carry out an analysis of the same schedule in relation to risk management, so as to ensure safety margins.
+\addcontentsline{toc}{section}{Used tools}
+\section*{Used tools}
+\begin{itemize}
+\item Github: for version control
+\item GoogleDoc: to write the document
+\item Draw.io: to create the diagrams
+\item \LaTeX: to create the pdf
+\item Creately: for Resource Allocation diagram
+\item Gantt Project: to create Gantt Diagrams
+\end{itemize}
+\addcontentsline{toc}{section}{Work hours}
+\section*{Work hours} 
+\begin{itemize}
+\item Emanuele Ricciardelli: $\sim$ 30 hrs.
+\item Giorgio Tavecchia: $\sim$ 30 hrs.
+\item Francesco Vetr\'o: $\sim$ 30 hrs.
+\end{itemize}
 \end{document}
 
 
