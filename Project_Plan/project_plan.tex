@@ -355,6 +355,7 @@ Regarding $SF_j$, each member of the summation is equivalent to a coefficient of
 \end{center}•
 \end{figure}
 \pagebreak
+\linebreak
 For each of these factors, we will now provide a definition and the reasoning behind the chosen value:
 \begin{itemize}
 \item \underline{\textbf{Precedentedness (PREC)}}:  The value of this coefficient decreases much higher is the degree of experience that the team presents in respect of a similar project. In particular, our experience level is \emph{LOW} because we have not previously participated in the development of systems of this size.
@@ -391,6 +392,293 @@ Using the previously defined equation:
 E= 0.91+0.01$\times$16.61=1.0761
 \end{center}
 \subsubsection{Cost drivers}
+We now carry out an analysis of the Cost Drivers in order to estimate the value of EM in the equation at paragraph 2.2.
+As previously indicated, we will use a post-architecture approach, thus providing an accurate computation of the relative cost drivers.
+\begin{itemize}
+\item \underline{\textbf{Analyst Capability (ACAP)}}: This driver measures the degree of reliability of the estimates and analyzes which have been carried out for the design of the project. In relation to PowerEnJoy system, we can claim to have performed a detailed analysis not only of the features to be implemented, but also about the environment in which the system have to operate, also investigating possible improper user in order to prevent the safeguard of the company. However, we have performed a series of assumptions, specified in the document RASD, which affect this analysis, allowing us to assign a \emph{HIGH} level.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Acap.png}
+\caption{ACAP}
+\label{fig:ACAP}
+\end{center}•
+\end{figure}
+\pagebreak
+\item \underline{\textbf{Programmer Capability(PCAP)}}: The ability of our team is not only to be identified in the development from scratch but also in the use of APIs and services of third parties, which is why, despite the team's knowledge may not be high in any sphere, the high degree of dialogue and self-critical learning allow to better manage any eventuality. For this reason we define an \emph{HIGH} level.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Pcap.png}
+\caption{PCAP}
+\label{fig:PCAP}
+\end{center}•
+\end{figure}
+\linebreak
+\item \underline{\textbf{Personnel Continuity (PCON)}}: This rating is in terms of the project’s annual personnel turnover. In particular, our team is composed by a limited number of people, and the possible turnover is very limited: so we assign a \emph{VERY HIGH} value.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Pcon.png}
+\caption{PCON}
+\label{fig:PCON}
+\end{center}•
+\end{figure}
+\linebreak
+\item \underline{\textbf{Required Software Reliability (RELY)}}: This is the measure of the extent to which the software must perform its intended function over a period of time. With respect to the PowerEnjoy system, a software failure could block the functioning of the entire car sharing system, causing great losses in terms of money and image for the company. This driver cost is set to \emph{HIGH}.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Rely.png}
+\caption{RELY}
+\label{fig:RELY}
+\end{center}•
+\end{figure}
+\pagebreak
+\item \underline{\textbf{Database Size (DATA)}}: This cost driver attempts to capture the effect large test data requirements have on product development. The rating is determined by calculating D/P, the ratio of bytes in the testing database to SLOC in the program. Since the car sharing service produces a high amount of information, divided between data relating to reservations, payments, users subscribed and other factors, given the amount of  SLOC computed before, we can assign the value \emph{VERY HIGH}.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Data.png}
+\caption{DATA}
+\label{fig:DATA}
+\end{center}•
+\end{figure}
+\pagebreak
+\item \underline{\textbf{Product Complexity (CPLX)}}: With respect to the COCOMO II definition of this parameter, defined by the usage of the following tables, we assign the \emph{NOMINAL} level.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Cplx1.png}
+\caption{CPLX1}
+\label{fig:CPLX1}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Cplx2.png}
+\caption{CPLX2}
+\label{fig:CPLX2}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Cplx3.png}
+\caption{CPLX3}
+\label{fig:CPLX3}
+\end{center}•
+\end{figure}
+\clearpage
+\item \underline{\textbf{Documentation match to life-cycle needs (DOCU)}}: The rating scale for the DOCU cost driver is evaluated in terms of the suitability of the project’s documentation to its life-cycle needs; with respect to our system the documentation provided is complete and cover all the necessary elements of the life-cycle, from the requirements analysis to the integration testing. For this reason we assign a \emph{NOMINAL} level.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Docu.png}
+\caption{DOCU}
+\label{fig:DOCU}
+\end{center}•
+\end{figure}
+\linebreak
+\item \underline{\textbf{Developed for Reusability (RUSE)}}: This cost driver reflects the additional effort needed to construct components intended for reuse on current or future projects. In particular, our components are strictly linked with the project itself but are designed in order to be expandable for future evolution of the service. Despite those consideration, however, we have decided to invest some effort in order to detect functionalities which are evidently (and so easily) generalizable for using across programs. We assign a \emph{HIGH} value.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Ruse.png}
+\caption{RUSE}
+\label{fig:RUSE}
+\end{center}•
+\end{figure}
+\pagebreak
+\item \underline{\textbf{Execution Time Constraint (TIME)}}: This cost driver reflect the time constraint imposed upon the software system, in particular it express the percentage of available execution time expected to be used by the system. Since the car sharing is a 24h/7days service, we suppose to have an average level of usage (average in terms of different time of the day, for example) set to \emph{VERY HIGH}, since we expect to have a large number of users connected and using the system.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Time.png}
+\caption{TIME}
+\label{fig:TIME}
+\end{center}•
+\end{figure}
+\linebreak
+\item \underline{\textbf{Main storage constraint (STOR)}}: This parameter reflects the expected amount of storage usage with respect to the availability of the hardware. Our system produces a huge amount of data every day but since the increasing dimension of disk storage availability in these years, we set this value to \emph{NOMINAL}.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Stor.png}
+\caption{STOR}
+\label{fig:STOR}
+\end{center}•
+\end{figure}
+\pagebreak
+\item \underline{\textbf{Platform Volatility (PVOL)}}: This parameter points out the possible need to make updates to the system platforms, both hardware and software. In the short term there are no structural changes, however, you may need to update the user interface in case of the introduction of new features. We expect to implement new update on a \emph{HIGH} level.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Pvol.png}
+\caption{PVOL}
+\label{fig:PVOL}
+\end{center}•
+\end{figure}
+\linebreak
+\item \underline{\textbf{Application Experience (APEX)}}: This driver is defined in terms of the project team level of experience with this type of application. Since is the first time, speaking for each member, to manage and develop an application with this dimension and amount of functionalities, the experience is limited to the 6 months of course lessons. We assign the \emph{LOW} value.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Apex.png}
+\caption{APEX}
+\label{fig:APEX}
+\end{center}•
+\end{figure}
+\linebreak
+\item \underline{\textbf{Platform Experience (PLEX)}}: The team has some previous experience in database management, user interfaces, client-server approach. The average knowledge about this kind of experience is comparable with a year so, with respect to the following table, we assign the value \emph{NOMINAL}.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Plex.png}
+\caption{PLEX}
+\label{fig:PLEX}
+\end{center}•
+\end{figure}
+\pagebreak
+\item \underline{\textbf{Language and Tool experience (LTEX)}}: This parameter reflects the knowledge of the team about languages and tools that will be used in the system development. With respect to java language, J2EE, HTML and CSS the average knowledge of the team is a strong underground knowledge comparable with about 3 years. We set this value to \emph{HIGH}.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Ltex.png}
+\caption{LTEX}
+\label{fig:LTEX}
+\end{center}•
+\end{figure}
+\linebreak
+\item \underline{\textbf{Use of software tools (TOOL)}}: This parameter underlines the importance of the usage of tools well integrated in the environment in which the system is developed. Since our application make use of mature tools (as expressed in the architectural design in DD), we set this value to \emph{HIGH}.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Tool.png}
+\caption{TOOL}
+\label{fig:TOOL}
+\end{center}•
+\end{figure}
+\pagebreak
+\item \underline{\textbf{Multisite development (SITE)}}: The development project has taken place mainly in remote, the team members has been kept informed each other regularly in case of autonomous work, however, the team has preferred to use conferencing tools to communicate and address the most important issues. For this reason we assign a \emph{VERY HIGH} value.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Site.png}
+\caption{SITE}
+\label{fig:SITE}
+\end{center}•
+\end{figure}
+\linebreak
+\item \underline{\textbf{Requirement development schedule (SCED)}}: This rating measures the schedule constraint imposed on the project team developing the software, in our particular case there were set strict deadline, so the schedule could not be relaxed, so we set the value to \emph{NOMINAL}.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/Sced.png}
+\caption{SCED}
+\label{fig:SCED}
+\end{center}•
+\end{figure}
+\pagebreak
+\end{itemize}
+We now summarize all the selected cost drivers:
+\begin{table}[h]
+\caption{Cost drivers}
+\begin{tabularx}{\textwidth}{|>{\hsize=.5\hsize}X|>{\hsize=.25\hsize}X|>{\hsize=.25\hsize}X|}
+\hline
+Cost driver & Factor & Value\\ 
+\hline
+Analyst Capability (ACAP) & High & 0.85\\
+\hline
+Programmer Capability(PCAP) & High & 0.88\\
+\hline
+Personnel Continuity (PCON) & Very High & 0.81\\
+\hline
+Required Software Reliability (RELY) & High & 1.10\\
+\hline
+Database size (DATA) & Very High & 1.28\\
+\hline
+Product Complexity (CPLX) & Nominal & 1.00\\
+\hline
+Documentation match to life-cycle needs (DOCU) & Nominal & 1.00\\
+\hline
+Developed for Reusability (RUSE) & High & 1.07\\
+\hline
+Execution Time Constraint (TIME) & Very High & 1.29\\
+\hline
+Main storage constraint (STOR) & Nominal & 1.00\\
+\hline
+Platform Volatility (PVOL) & High & 1.15\\
+\hline
+Application Experience (APEX) & Low & 1.10\\
+\hline
+Platform Experience (PLEX) & Nominal & 1.00\\
+\hline
+Language and Tool experience (LTEX) & High & 0.91\\
+\hline
+Use of software tools (TOOL) & High & 0.9\\
+\hline
+Multisite development (SITE) & High & 0.93\\
+\hline
+Requirement development schedule (SCED) & Nominal & 1.00\\
+\hline
+& Product & 1.135\\
+\hline
+\end{tabularx}
+\end{table}
+\pagebreak
+\subsubsection{Effort equation}
+We are now able to perform the effort equation expressed in paragraph 2.2 that we now rewrite with the computed coefficients:
+\begin{center}
+PM=A$\times$Size$^E\times\prod_{1<=i<=n}EM_i$
+\end{center}
+\begin{itemize}
+\item A = 2.94
+\item Average Size=9,614KSLOC;  Upperbound Size= 14,003KSLOC;
+\item $\prod_{1<=i<=n}EM_i$ = 1.135
+\item E = 1.0761
+\end{itemize}
+So:
+\begin{itemize}
+\item Average PM = 38.11 person-months
+\item UpperBound PM = 57.12 person-months
+\end{itemize}•
+\subsubsection{Schedule estimation}
+The duration of the project schedule is computed using the following equation:
+\begin{center}
+Duration=3.67$\times$PM$^{0.28+0.2\times(E-B)}$
+\end{center}
+Where:
+B is equal to 0.91 for COCOMO II 
+E is equal to 1.0761, computed as function of the scale factors, as above
+PM is the effort computed with the effort equation at paragraph 2.2.3.
+So we obtain:
+\begin{itemize}
+\item Average duration = 11.48 months $\simeq$ 12 months
+\item Upperbound Duration= 13,03 months $\simeq$ 14 months
+\end{itemize}•
+\pagebreak
+\section{Schedule}
+In this chapter we’re going to define a high-level schedule for the project.
+It’s important to underline that the result of this schedule should not be considered as defined and unchangeable, primarily because of the unforeseen that could occur (see chapter related to Risk Management) and may not ensure the timely achievement of milestones. Another reason is that it may also be necessary to return to work on previous task in case of possible adjustments.
+\begin{enumerate}
+\item We now define the main tasks to be scheduled:
+\item Meetings with stakeholders: in order to give a first definition of requirements and features that the system-to-be must implement.
+\item Requirement analysis and specification document (rasd): definition of a first document containing a detailed description of all requirements (functional and non-funcional) and goals related to the project.
+\item Design Document (DD): definito of a first document describing the architectural design chosen for the development of the system.
+\item Integration test plan document (ITPD): definition of a first document containing the sequence of integration and procedure necessary to cover the integration testing of the components of the system.
+\item Project Plan Document (PPD): definition of a first document containing an analys of the possible dimension of the project, an estimation of the effort and cost, the schedule, the resource allocation and the risk management for the project.
+\item Development: Development of the software system
+\item Integration Test: Integration testing of the software system
+\item Deployment: Deliver and deployment of the software to the customers.
+\end{enumerate}
+To compute the following schedule, we used all data retrieved from the analysis in this document and the duration of the drafting of the previous documents; in particular, we assumed that the team will work 8 hours per day (so the deadlines of the real project do not coincide with the one related to the course) excluding 2 days a week.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/documentRA.png}
+\label{fig:SCED}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/document.png}
+\label{fig:SCED}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/documentPPDITPD.png}
+\label{fig:SCED}
+\end{center}•
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=\textwidth, height=0.4\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/Project_Plan/PP_images/documentDevelopment.png}
+\label{fig:SCED}
+\end{center}•
+\end{figure}
 \end{document}
 
 
