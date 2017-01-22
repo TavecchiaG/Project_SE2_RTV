@@ -41,6 +41,11 @@ This document will be structured in 3 macro parts:
 \item ITPD: Integration Test Plan Document
 \item PM: person-months
 \item KSLOC: kilo-source lines of code
+\item ILF: Internal Logic Files
+\item ELF: External Interface Files
+\item EQ: External Inquiries
+\item EI: External Inputs
+\item EO: External Output
 \end{itemize}
 \subsection{Reference documents}
 \begin{itemize}
@@ -754,53 +759,54 @@ DD & 16 - Discussion defining Components and High-Level Components\\
 \hline
 & 32 - Last revision on DD\\
 \hline
-PPD & 33 - Discussion on dispatching components into ILF, ELF, EI, EO, EQ\\
-\hline
-& 34 - ILF and ELF FPs evaluation and description \\
-\hline
-& 35 - EI, EO and EQ FPs evaluation and description\\
-\hline
-& 36 - Brief revision to check what has been done\\
-\hline
-& 37 - COCOMO II cost and effort estimation\\
-\hline
-& 38 - Brief revision to check what has been done\\
-\hline
-& 39 - Scheduling Plan\\
-\hline
-& 40 - Resource Plan\\
-\hline
-& 41 - Discussion on identifying what type of risks could affect the system\\
-\hline
-& 42 - Risk Management\\
-\hline
-& 43 - Copy Word File into a \LaTeX Document\\
-\hline
-& 44 - Last revision on PPD\\
-\hline
 \end{tabularx}
 \end{table}
 \begin{table}[h]
 \begin{tabularx}{\textwidth}{|>{\hsize=.25\hsize}X|>{\hsize=.75\hsize}X|}
-ITPD & 45 - Discussion on what kind of integration strategy adopt\\
 \hline
-& 46 - Discussion on Identifying individual steps of component integration\\
+ITPD & 33 - Discussion on what kind of integration strategy adopt\\
 \hline
-& 47 - Integration Strategy\\
+& 34 - Discussion on Identifying individual steps of component integration\\
 \hline
-& 48 - Individual Steps and Test Description\\
+& 35 - Integration Strategy\\
 \hline
-& 49 - Brief revision to check what has been done\\
+& 36 - Individual Steps and Test Description\\
 \hline
-& 50 - Discussion on drivers\\
+& 37 - Brief revision to check what has been done\\
 \hline
-& 51 - Tools and Test Equipment\\
+& 38 - Discussion on drivers\\
 \hline
-& 52 - Driver description\\
+& 39 - Tools and Test Equipment\\
+\hline
+& 40 - Driver description\\
+\hline
+& 41 - Copy Word File into a \LaTeX Document\\
+\hline
+& 42 - Last revision on ITPD\\
+\hline
+PPD & 43 - Discussion on dispatching components into ILF, EIF, EI, EO, EQ\\
+\hline
+& 44 - ILF and EIF FPs evaluation and description \\
+\hline
+& 45 - EI, EO and EQ FPs evaluation and description\\
+\hline
+& 46 - Brief revision to check what has been done\\
+\hline
+& 47 - COCOMO II cost and effort estimation\\
+\hline
+& 48 - Brief revision to check what has been done\\
+\hline
+& 49 - Scheduling Plan\\
+\hline
+& 50 - Resource Plan\\
+\hline
+& 51 - Discussion on identifying what type of risks could affect the system\\
+\hline
+& 52 - Risk Management\\
 \hline
 & 53 - Copy Word File into a \LaTeX Document\\
 \hline
-& 54 - Last revision on ITPD\\
+& 54 - Last revision on PPD\\
 \hline
 \end{tabularx}
 \end{table}
@@ -820,10 +826,10 @@ In particular, we must take into account that nowadays the car sharing services 
 Earlier we mentioned the team and how certain factors can influence the development negatively.
 One of the problems that may be encountered is the lack of understanding. This may be due to multiple reasons, primarily due to the lack, or rare, presence of internal meetings: these in fact not only guarantee to maintain an updated flow of informations about the state of development through the developing teams, but also to promote constant motivation and teamwork.
 The misunderstanding may result from other factors, such as incohesive team, where the communication among its members is not proper, so a situation in which each member doesn’t know how is the working progress, is very common.
-The overlapping of responsibilities among multiple team members must also be seen as a remedy in case of absence (illness or other reasons) of one of the members, so as not to slow down or stop the development.
+The choice of subdividing the work load through multiple teams (task subdivision) could be seen as a remedy in case of absence (illness or other reasons) of one of the members, so as not to slow down too much the development because they work on different tasks.
 Continuing on the team's considerations, we can say that the development environment consists of mature programs, which therefore should not show any problems or obstacles to development. Same thing can be done with regard to google APIs used, which at most may go and introduce / remove the feature; for this reason you need to stay informed about updates and then be able to implement them as soon as possible, both during and after the development.
 Although our team is equipped with the necessary knowledge for the development of this type of system, in order to avoid possible stalls or delays in the development of the more complex features of the system, it has been carried out a careful analysis at the beginning of the process, so as to ensure the recruitment of specialized staff (for limited periods) to remedy at these eventualities.
-With regard to the maintenance company and the payment system, that are the outside companies with which they were made contracts for the management of particular fields, we must assume that these contracts may expire, and then the same external companies may change. It is therefore necessary that our system is able to quickly interface with the new services, in order to minimize possible disruption of service, and for this reason it is necessary to focus on the development of components as more flexible.
+With regard to the maintenance company and the payment system, that are the outside companies with which we have made contracts for the management of particular fields, we must assume that these contracts may expire, and then the external companies may change. It is therefore necessary that our system is able to quickly interface with the new services, in order to minimize possible disruption of service, and for this reason it is necessary to focus on the development of components as more flexible.
 Another risk in which the development and especially the release system may encounter is constituted by the hardware necessary. In order to avoid reliability problems (due to the nature of the service) and therefore the  increase in the price of the hardware needed to guarantee it, it is suggested to implement a cloud architecture, maintaining lower costs and ensuring a constant and efficient service.
 All these risks could slow the achievement of one or more deadlines in the schedule, for this reason it is necessary to carry out an analysis of the same schedule in relation to risk management, so as to ensure safety margins.
 \addcontentsline{toc}{section}{Used tools}
