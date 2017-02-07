@@ -62,12 +62,12 @@ Users:
 \label{sec:domain}
 In the world analysed for the development, we assume the properties defined below:
 \begin{itemize}
-\item [{[D1]}] All cars available are of the same model.
+\item [{[D1]}] The model of the available cars is the same for all of that.
 \item [{[D2]}] When a new car is made available, the company add it to the system.
-\item [{[D3]}] When a car is removed from a city either for maintenance or other reasons, the company delete it from the system.
+\item [{[D3]}] When a car is removed from a city either for maintenance or other reasons, the company deletes it from the system.
 \item [{[D4]}] All the GPS information from a car are always right.
 \item [{[D5]}] The GPS of a car can't be switched off, unless the car itself is out of service.
-\item [{[D6]}] All information used for identifying how many passengers are in car, are always right.
+\item [{[D6]}] All information used for identifying how many passengers are in car are always right.
 \item [{[D7]}] Number of passengers is always nonnegative.
 \item [{[D8]}] It is always known if the driver is inside the car or not.
 \item [{[D9]}] The definition of a parking area to be safe or not is well defined by system.
@@ -124,8 +124,8 @@ In the world analysed for the development, we assume the properties defined belo
 \item [{[A1]}] We assume that whenever a user damages the rented car or breaks the law regulamentation or isn't able to pay the request fare for the ride, an external association will face the problem of retrieving the amount stated by the company.
 \item [{[A2]}] We assume that whenever a user damages a rented car or breaks the law or isn't able to pay the request fare for the ride, he'll be temporary suspended from the service until all the debts will be refund.
 \item [{[A3]}] There aren't legacy systems, since the development will provide a brand new service of car-sharing.
-\item [{[A4]}] The system generates a specific code when a user reserve a selected car.
-\item [{[A5]}] The user receive a code when reserve a car
+\item [{[A4]}] The system generates a specific code when a user reserves a selected car.
+\item [{[A5]}] The user receives a code when reserves a car
 \item [{[A6]}] The user will apply the valid code on the car. If the code is valid, the car will unlock the doors granting the access to the vehicle.
 \item [{[A7]}] Bonuses assumptions
 \subitem [{A7.1}] If the system detects that two battery bonuses can be applied for the last ride of an user, only the bonus with the greatest percentage of discount will be applied.
@@ -135,7 +135,7 @@ In the world analysed for the development, we assume the properties defined belo
 \item [{[A8]}] We assume that if a user leaves a car in an unsafe area, the car will wait 2 minute (to ensure that the driver doesn't plan to enter again) then it will block itself and will notify the system about the current position. A maintenance man will then move the car to a safe area and the last user will be notified for his bad behaviour.
 \item [{[A9]}] We assume that, at the end of a ride, the car will be blocked as soon as all driver and passengers are exited the car
 \item [{[A10]}] We assume that the system will check, during the registration of a new user, if all the information delivered are correct.
-\item [{[A11]}] We assume that the system will implement an algorithm to detect if a user is trying to avoid the correct payment for extending the reservation time. As example: a user is able to extend his reservation further than one hour with the payment of an additional charge. After the reservation has expired, the system will block the user to reserve the same car until at least 30 min are elapsed; if not, the user would be able to pay the fee of 1 euro for expiration time, then reserve again and he will pay a maximum of 1 euro per hour, which will lead to a loss of money for the company.
+\item [{[A11]}] We assume that the system will implement an algorithm to detect if a user is trying to avoid the correct payment for extending the reservation time. As example: a user is able to extend his reservation further than one hour with the payment of an additional charge. After the reservation has expired, the system will block the user to reserve the same car until at least 30 min are elapsed; if not, the user would be able to pay the fee of 1 euro for expiration time, then reserve again and he will pay a maximum of 1 euro per hour, instead of the extension fee. This situation is avoided because it probably will lead to a loss of money for the company.
 \item [{[A12]}] We assume that if a car is connected to a power grid until 3 minutes from having parked, the system attributes that the car was put in charge by the last driver.
 \item [{[A13]}] We assume that all cars in the system can be seen such as a dumb terminal because they are set of sensors without any kind of logic on it. So, for this reasons, they inform through their sensor the system about the world's situation in which they are and the system reacts based on its own logic.
 \item [{[A14]}] \sout{We assume that all cars in the system can be seen such as a dumb terminal because they are set of sensors without any kind of logic on it. So, for this reasons, they inform through their sensor the system about the world's situation in which they are and the system reacts based on its own logic.}
@@ -301,7 +301,7 @@ The functional requirements are here grouped under each goal.
 \end{itemize}
 \subsection{Non-functional requirements}
 \subsubsection{Reliability} 
-With respect to cars, availability is proved by car manufacturer that has all the vehicles tested by an international organization. This means that the cars employed for the service is fitted with security devices that are commonly present in any ordinary car. Regarding the system, a first estimation can be given: the system seems to capture the desired requirements and so can be said that all the functionalities will be correct, involving the user operations, the privacy concerns and general correctness. A lot of work will be done in the future, such as developing a correct architecture for the system to allows future improvements, testing and upgrading the system with new functionalities and so on providing a reliability level that is the same or better during the whole system's life.
+With respect to cars, reliability is proved by car manufacturer that has all the vehicles tested by an international organization. This means that the cars employed for the service is fitted with security devices that are commonly present in any ordinary car. Regarding the system, a first estimation can be given: the system seems to capture the desired requirements and so can be said that all the functionalities will be correct, involving the user operations, the privacy concerns and general correctness. A lot of work will be done in the future, such as developing a correct architecture for the system to allows future improvements, testing and upgrading the system with new functionalities and so on providing a reliability level that is the same or better during the whole system's life.
 \subsubsection{Availability}
 We can assume that a lower bound for the system availability is set to 99\% on year basis, giving to the company 4 days of tolerance to tackle serious casualties. This parameter is going to be contracted with the third party that owns the computational power and the disks for databases. With respect to the cars, a good maintenance plan is key for not facing problems with availability of the cars themselves.
 \subsubsection{Security}
@@ -412,7 +412,7 @@ Flow of events & The guest visit the login page of the system. \\
 & The guest insert password.\\
 & The guest confirm the password inserted.\\
 & The system check the password provided.\\
-& The system redirect the user to the main page of PowerEnjoy car-sharing service.\\
+& The system creates a valid session with the user’s data and redirect the user to the main page of PowerEnjoy car-sharing service.\\
 \hline
 Exit conditions & The user is successfully redirected to the main page. \\
 \hline
@@ -525,16 +525,17 @@ Exceptions & There are no exceptions.\\
 \end{tabularx}
 \end{table}
 \begin{table}[h]
-\caption{Rent of a car} \label{tab:scenario7}
+\caption{Start Ride} \label{tab:scenario7}
 \begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
-Name & Rent a car \\
+Name & Start Ride \\
 \hline
 Actors & Logged users \\
 \hline
 Entry condition &  User must have performed a reservation that is not yet expired. \\
 \hline
-Flow of events & User reaches his reserved car.\\
+Flow of events & User reaches the “manage reservation” page on the PowerEnjoy’s app.\\
+& User provides the code shown in the “manage reservation”, that is related to the last reservation performed, to the Code Reader situated outside the vehicle.\\
 & The system detects that the user is providing his reservation code.\\
 & The system unlocks the car.\\
 & The system detects when the user access the car and the car is ignited.\\
@@ -542,7 +543,7 @@ Flow of events & User reaches his reserved car.\\
 \hline
 Exit conditions & The reservation is completed and the system registers a new ride.\\
 \hline
-Exceptions & The user is near a car that he has not reserved, the system detects it and notify him. None of the two cars will be unlocked.\\
+Exceptions & The user is near a car that he has not reserved, the system detects it and notify him. None of the two cars will be unlocked. The exceptions due to the missing reservation are not explained because of it’s the entry condition.\\
 \hline
 \end{tabularx}
 \end{table}
@@ -554,7 +555,7 @@ Name & Enable money-saving option \\
 \hline
 Actors & Logged users \\
 \hline
-Entry condition & User must have rent a car.\\
+Entry condition & User must have started a ride.\\
 \hline
 Flow of events & User selects to enable the money-saving option.\\
 & The system asks user his destination.\\
@@ -576,33 +577,55 @@ Name & Report car’s issue\\
 \hline
 Actors & Logged users, \emph{maintenance system}\\ 
 \hline
-Entry condition & User must have reserved or rent a car and the car must have a problem\\
+Entry condition & User must have reserved a car or started a ride or rent a car and the car must have a problem or the user have found a damaged car and (s)he wants to notify that to the PowerEnjoy Company.\\
 \hline
 Flow of events & User selects to report an issue from the main page\\
 & The system redirects him to the related page.\\
 & The user inserts a description of the problem.\\
-& The system catches the informations of the user’s reservation.\\
+& \textit{Alternatively:}\\
+& \textit{The system catches the informations of the user’s reservation or ride.}\\
+& \textit{The system notices that the user doesn’t have a current reservation or ride and so it asks for a car plate number.}\\
+& \textit{(end of alternative flow)}\\
+& The user inserts descriptions about the damage.\\
 & The user confirms the report.\\
 & The system redirects him to the main page.\\
 & The system notifies the maintenance about the report.\\
 \hline
 Exit conditions & The issue is reported and the user can leave the car \\
 \hline
-Exceptions & The user provides an empty description, in this case the system shows an error message and asks to fill the description.\\
+Exceptions & The user provides an empty description, in this case the system shows an error message and asks to fill the description or the user that hasn’t a current reservation or ride could insert a wrong car plate, and so the system notifies the error.\\
 \hline
 \end{tabularx}
 \end{table}
 \begin{table}[h]
-\caption{Recharge a car} \label{tab:scenario10}
+\caption{Damaged reserved car notification} \label{tab:scenario10}
+\begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
+\hline
+Name & Reserved damaged car notification\\
+\hline
+Actors & Logged users, \emph{maintenance system}\\ 
+\hline
+Entry condition & User must have reserved a car but (s)he doesn’t picked it up yet. The reserved car has been reported as damaged and the problem is not solved yet.\\
+\hline
+Flow of events & The system notices that the reported car corresponds to a reserved car.\\
+& The system warns through push notification and by email the user notifying that the reserved car is no longer available.\\
+& The system deletes the current reservation.\\
+\hline
+Exit conditions & The reservation associated to the damaged car is deleted and the user is notified about that.\\
+\hline
+\end{tabularx}
+\end{table}
+\begin{table}[h]
+\caption{Recharge a car} \label{tab:scenario11}
 \begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Recharge a car\\
 \hline
 Actors & Logged users\\ 
 \hline
-Entry condition & User must have rent a car\\
+Entry condition & User must have started a ride.\\
 \hline
-Flow of events & User exits from the car in a safe area with power grid.\\
+Flow of events & The system detects that the user and its passengers have left the vehicle parked in a safe area with power grid.\\
 & The system locks the car.\\
 & The system detects the car's plugging and provides the discount.\\
 \hline
@@ -613,7 +636,7 @@ Exceptions & The system doesn’t detect the car’s plugging because the user d
 \end{tabularx}
 \end{table}
 \begin{table}[h]
-\caption{View reported cars by maintenance and selection of one} \label{tab:scenario11}
+\caption{View reported cars by maintenance and selection of one} \label{tab:scenario12}
 \begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & View reported cars\\
@@ -629,14 +652,14 @@ Flow of events & Maintenance selects the “View reported cars” tab.\\
 & The maintenance approves the selection and it handles the situation.\\
 & The system update the state of the report as WIP.\\
 \hline
-Exit conditions & The maintenance goes to the position, the system update the report.\\
+Exit conditions & The system update the report.\\
 \hline
 Exceptions & There are no exceptions.\\
 \hline
 \end{tabularx}
 \end{table}
 \begin{table}[h]
-\caption{Handle a car by maintenance} \label{tab:scenario12}
+\caption{Handle a car by maintenance} \label{tab:scenario13}
 \begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Handle car\\
@@ -645,13 +668,8 @@ Actors & Maintenance guy\\
 \hline
 Entry condition & At least one car has been reported, the maintenance guy is already logged in the system and has selected which cars to work on.\\
 \hline
-Flow of events & Maintenance goes to the position of the reported cars. Maintenance identifies the problem.\\
-& \textit{Alternatively:}\\
-& \textit{Maintenance moves the car to the nearest available power grid and plugs the car.}\\
-& \textit{Maintenance verifies the damage and take the car away to repair it.}\\
-& \textit{Maintenance moves the car, parked in an unsafe area, to a safe area.}\\
-& \textit{(end of alternative flow)}\\
-& Maintenance notify the system and update the report of the car. The system upgrade the report.\\
+Flow of events & After handling the situation in a proper way, the Maintenance notify the system and update the report of the car.\\
+& The system upgrade the report.\\
 \hline
 Exit conditions & The report of the issue is updated with information related to the specific intervention.\\
 \hline
@@ -660,7 +678,7 @@ Exceptions & The maintenance is not able to solve the problem, in this case the 
 \end{tabularx}
 \end{table}
 \begin{table}[!t]
-\caption{Provide a payment} \label{tab:scenario13}
+\caption{Provide a payment} \label{tab:scenario14}
 \begin{tabularx}{\textwidth}{|>{\hsize=.4\hsize}X|>{\hsize=.6\hsize}X|}
 \hline
 Name & Starting payment\\
