@@ -10,7 +10,7 @@
 
 \begin{document}
 \begin{titlepage}
-\title{Integration Testing Document \\Version 1.0}
+\title{Integration Testing Document \\Version 1.1}
 \author{Emanuele Ricciardelli (mat. 875221) \and Giorgio Tavecchia (mat. 874716) \and Francesco Vetr\'o (mat. 877593)}
 \begin{figure}
 \begin{center}
@@ -303,7 +303,7 @@ As last integration, like in other subsystems, we verify and test the integratio
 \end{center}•
 \end{figure}
 \clearpage
-\emph{\underline{Note to the reader}}: In previous integration sequences it was performed a choice concerning the gateway present in the component view of the DD: we decide to show explicitly only the payment and maintenance gateway. This is because the integration of the omitted gateway is to consider joint with the components to which they are directly linked: For example, the \textbf{Sensor Gateway} is considered as a joint to the component \textbf{Data Collector} and the gateway relative to the notifications joint with the \textbf{Notification Helper}.
+\emph{\underline{Note to the reader}}: In previous integration sequences it was performed a choice concerning the gateway present in the component view of the DD: we decide to show explicitly only the payment and maintenance gateway. This is because the integration of the omitted gateway is to consider joint with the components to which they are directly linked: For example, the \textbf{\sout{Sensor} Cars Gateway} is considered as a joint to the component \textbf{\sout{Data Collector} Collector Data} and the gateway relative to the notifications joint with the \textbf{Notification Helper}.
 \pagebreak
 \subsubsection{Subsystem integration sequence}
 In order to recreate from the subsystems, considered in the previous section, the overall system, the process of integration will initially proceed by integrating the \textbf{Reservation Subsystem} with \textbf{Car / Sensor Subsystem} in order to test all of those functions of the first subsystem that require access to the functionality provided by the second.
@@ -1122,5 +1122,11 @@ In particular we will need:
 \item Emanuele Ricciardelli: $\sim$ 30 hrs.
 \item Giorgio Tavecchia: $\sim$ 30 hrs.
 \item Francesco Vetr\'o: $\sim$ 30 hrs.
+\end{itemize}
+\addcontentsline{toc}{section}{Changelog}
+\section*{Changelog}
+\begin{itemize}
+\item v1.1
+\subitem - Slight modification to the "Note to the reader" of paragraph Software integration sequence, at the bottom of the last image.
 \end{itemize}
 \end{document}

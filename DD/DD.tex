@@ -8,7 +8,7 @@
 
 \begin{document}
 \begin{titlepage}
-\title{Design Document \\Version 1.0}
+\title{Design Document \\Version 1.1}
 \author{Emanuele Ricciardelli (mat. 875221) \and Giorgio Tavecchia (mat. 874716) \and Francesco Vetr\'o (mat. 877593)}
 \begin{figure}
 \begin{center}
@@ -100,7 +100,7 @@ The PowerEnJoy system will be shaped in a three tier architecture. This architec
 \subsection{High level components and their interaction}
 The high level components architecture in Figure 2 is made of five parts. The main part is the \emph{Global system}: it is a singleton that contains all the business logic. It is splitted into two sections: 
 \begin{itemize}
-\item the \emph{Car sensors subsystem}, as stated in the RASD, the cars are seen by the system as a set of sensors that only provide data. This part of the system-to-be is devoted to collect data from cars, convert them in a usable structure for the system and then send them to the business logic part named \emph{Application server};
+\item the \emph{Car sensors subsystem}, as stated in the RASD, the cars are seen by the system as a set of sensors and actuators that only provide data. This part of the system-to-be is devoted to collect data from cars, convert them in a usable structure for the system and then send them to the business logic part named \emph{Application server};
 \item the \emph{Application server} that will receive requests, will manage the information provided by the \emph{Car sensors subsystem} and will be able to communicate with the \emph{Payment system} in order to retrieve payments information.
 \end{itemize}•
 The customer, via the mobile app or the service’s web page, can initiate a communication with the \emph{Application server} that will complete the task requested and will answer back immediately with a message about the success or failure of the request and, if other information are needed, will send an email or a push notification providing the missing part (e.g. the client reserves a car, the request is successful and the system answers with a push notification/email containing the code to unlock the car).
@@ -131,26 +131,27 @@ The component view consists of the following components:
 \item \textbf{Maintenance}: maintenance device used to interact with the system in order to provide maintenance features.
 \item \textbf{Payment system}: third party device used to provide information about payments, their completion and other relating information.
 \item \textbf{Request manager}: manager used to receive request from the outside and to route them to the correct controller. 
-\item \textbf{Login/Registration controller}: manage login and registration aspects
-\item \textbf{Reservation controller}: manage reservation aspects.
-\item \textbf{Ride controller}: manage ride aspects.
-\item \textbf{Cars controller}: manage all informations related to cars, sensors and their interaction with the users.
-\item \textbf{Collector data}: manage the data collection from different sensors
+\item \textbf{Login/Registration controller}: \sout{manage login and registration aspects.} Controller used for the management of the operations related to login and the system registration.
+\item \textbf{Reservation controller}: \sout{manage reservation aspects.} Controller used for the reservation management , such as creating, by searching available cars or retrieving the unlock code, deleting, and extension.
+\item \textbf{Ride controller}: \sout{manage ride aspects.} Controller used for the management of rides. It contains functions for the initiation and termination of rides. In addition, it implements methods for enabling the \emph{Money-saving option}.
+\item \textbf{Cars controller}: manage all informations related to cars, sensors, actuators and their interaction with the users.
+\item \textbf{Collector data}: manage the data collection from different sensors and actuators.
 \item \textbf{Payment controller}: manage payment aspects like register debts or mark their completion.
-\item \textbf{Communication manager}: component used to manage information exchange between different controllers and between them and the model.
+\item \textbf{Communication manager}: component used to manage information exchange between different controllers and between them and the \sout{model.} data access manager.
 \item \textbf{Notification helper}: manage notification aspects, routing them to the correct gateway
 \item \textbf{Push gateway}: manage the sending of push notification to mobile app.
 \item \textbf{Email gateway}: manage the sending of Email messages.
-\item \textbf{Sensor gateway}: handle the sending and receiving of data collected by the various sensors present on cars.
+\item \textbf{\sout{Sensor} Car gateway}: handle the sending and receiving of data collected by the various sensors present on cars.
 \item \textbf{Maintenance gateway}: manage the sending of notification to the maintenance company
 \item \textbf{Payment gateway}: manage the sending of payment information to the third party payment service
-\item \textbf{Model}: model of the world, used by the controllers.
+\item \textbf{\sout{Model} Data Access Manager}: \sout{model of the world, used by the controllers.} Component used to manage and access the database. It is used to mantain the actual model the system is working on.
 \item \textbf{Database}: database used to store persistent data.
 \item \textbf{Google Maps API}: API service used by the ride controller to provide navigation information.
 \end{itemize}•
-The interaction between the system and users is provided by a series of interfaces, one for each type of actor. All requests are handled by the single component \emph{Request Manager} that will provide for their proper forwarding within the system. We have designed a system consisting of several controllers, each dedicated to a specific type of functionality. This allows us to maintain a high level of cohesion of the different components, allowing, in case of future expansions of the service, to update the individual components smoothly and with great flexibility. The division of functions in various components will also allow us to efficiently test the service provided. In order to maintain a high degree of flexibility, we decided to introduce a component \emph{Communication manager} dedicated to the sorting of the information exchanged between the controllers themselves and the model, thus avoiding the definition of direct links between controllers that might obstruct and make more complex a future possible expansion of the service.
+The interaction between the system and users is provided by a series of interfaces, one for each type of actor. All requests are handled by the single component \emph{Request Manager} that will provide for their proper forwarding within the system. We have designed a system consisting of several controllers, each dedicated to a specific type of functionality. This allows us to maintain a high level of cohesion of the different components, allowing, in case of future expansions of the service, to update the individual components smoothly and with great flexibility. The division of functions in various components will also allow us to efficiently test the service provided. In order to maintain a high degree of flexibility, we decided to introduce a component \emph{Communication manager} dedicated to the sorting of the information exchanged between the controllers themselves and the \sout{model} Data access manager, thus avoiding the definition of direct links between controllers that might obstruct and make more complex a future possible expansion of the service. A little remark concerns the system’s design, in detail concerning of the Collector Data component: despite the most part of the functionalities is strictly linked to the Cars Controller component, we have decided to instantiate a connection between Collector Data and Communication Manager. This allows the Reservation Controller, in the new reservation’s creation step, to communicate directly the unlocking code to the car without passing through other intermediate components. This choice eases the workload of the Cars Controller, that is the central hub of the whole operations concerning the reservation and ride subsystem. 
 In analogous way we introduced a component \emph{Notification helper} dedicated to the proper addressing of the notifications to users, thus separating the functionality of sending of notifications from the logic of the underlying service.
-As shown in the diagram, the only access to the model and to the database it is via the \emph{Communication Manager} that will carry out read and write functionality.
+As shown in the diagram, the only access to the \sout{model and to the database it} database of the system is via the \emph{Communication Manager} that will \sout{carry out read and write functionality.} forward all the possible queries to the data access manager.
+All the operations performed by the Payment Controller are based on an identifier generated by our system and mapped with the User ID (i.e. the password). The ID generated is then communicated to the Payment Society in order to the decouple the user’s informations and to avoid sensitive data exposition.
 \newpage
 \subsection{Deployment view}
 \begin{figure}[h]
@@ -421,13 +422,6 @@ public Position moneySavingDistribution(Position destination){
 \label{fig:UX}
 \end{center}•
 \end{figure}
-\begin{figure}[h]
-\begin{center}
-\includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio]{/home/francesco/git/Project_SE2_RTV/DD/DD_images/BCE.png}
-\caption{BCE - In this diagram the cardinality referred to the \emph{Entity} are opposite with respect to the \emph{ER diagram}.}
-\label{fig:BCE}
-\end{center}•
-\end{figure}
 \clearpage
 \subsection{APIs}
 \subsubsection{Maintenance system}
@@ -529,5 +523,13 @@ When we refer to the \emph{Request Manager} we implicitly also intend the use of
 \item Emanuele Ricciardelli: $\sim$ 30 hrs.
 \item Giorgio Tavecchia: $\sim$ 30 hrs.
 \item Francesco Vetr\'o: $\sim$ 30 hrs.
+\end{itemize}
+\addcontentsline{toc}{section}{Changelog}
+\section*{Changelog}
+\begin{itemize}
+\item v1.1
+\subitem - Changed the Component View Diagram
+\subitem - Modified descriptions in paragraph High level components and theri interaction
+\subitem - Modified descriptions in paragraph Component View
 \end{itemize}
 \enddocument
